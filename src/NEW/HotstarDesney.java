@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class HotstarDesney {
+    static int p = 20;
     public static void main(String[] args) {
         List<Integer> l = new ArrayList<>();
         l.add(3);
@@ -21,7 +22,7 @@ public class HotstarDesney {
 
 
         int[] arr = {0, 1, 1, 0, 0, 1, 0, 0, 0, 0};
-        System.out.println(numOfClick(arr,30));
+        System.out.println(numOfClick(arr,20));
     }
    public static int minX(List<Integer> arr){
         int n = arr.size();
