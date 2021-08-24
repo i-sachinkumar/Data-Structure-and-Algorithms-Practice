@@ -9,9 +9,12 @@ import java.util.List;
  *      if we add each element of a List<Integer> from left to right, the sum never go below 1
  */
 
+/**
+ * Q2.
+ */
+
 public class HotstarDesney {
-    static int p = 20;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<Integer> l = new ArrayList<>();
         l.add(3);
         l.add(-4);
@@ -20,9 +23,11 @@ public class HotstarDesney {
 
         System.out.println(minX(l));
 
-
+        Thread.sleep(2000);
         int[] arr = {0, 1, 1, 0, 0, 1, 0, 0, 0, 0};
         System.out.println(numOfClick(arr,20));
+
+
     }
    public static int minX(List<Integer> arr){
         int n = arr.size();
