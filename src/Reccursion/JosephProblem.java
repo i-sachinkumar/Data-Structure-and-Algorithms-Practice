@@ -48,6 +48,13 @@ package Reccursion;
 
 public class JosephProblem {
     public static void main(String[] args) {
+        System.out.println(safePos(2,1)+1);
+        System.out.println(safePos(4,2)+1);
+        System.out.println(safePos(5,3)+1);
+    }
 
+    static int safePos(int n, int k) {
+        if(n == 1) return 0;
+        return (safePos(n-1, k) + k )%n;
     }
 }
