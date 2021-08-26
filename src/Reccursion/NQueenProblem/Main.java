@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * 1
  * Output:
  * [1]
- * Explaination:
+ * Explanation:
  * Only one queen can be placed
  * in the single cell available.
  * Example 2:
@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * 4
  * Output:
  * [2 4 1 3 ] [3 1 4 2 ]
- * Explaination:
+ * Explanation:
  * These are the 2 possible solutions.
  *
  *
@@ -79,6 +79,7 @@ public class Main {
 
         // check for backward diagonal ( \ )
         int r = i, c = j;
+
         while (r > 0 && c > 0) {
             r--;
             c--;

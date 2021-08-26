@@ -1,5 +1,8 @@
 package Reccursion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * There are n people standing in a circle (numbered clockwise 1 to n) waiting to be executed.
  * The counting begins at point 1 in the circle and proceeds around the circle in a
@@ -33,7 +36,8 @@ package Reccursion;
  *
  *
  * Your Task:
- * You don't need to read input or print anything. Your task is to complete the function safePos() which takes an Integer n as input and returns the safe position.
+ * You don't need to read input or print anything. Your task is to complete the
+ * function safePos() which takes an Integer n as input and returns the safe position.
  *
  *
  *
@@ -48,13 +52,38 @@ package Reccursion;
 
 public class JosephProblem {
     public static void main(String[] args) {
-        System.out.println(safePos(2,1)+1);
-        System.out.println(safePos(4,2)+1);
-        System.out.println(safePos(5,3)+1);
+        System.out.println(safePos(2,1));
+        System.out.println(safePos(4,2));
+        System.out.println(safePos(5,3));
+
+        List<Integer> h = new ArrayList<>();
+        h.add(1);
+        h.add(2);
+        h.add(3);
+        h.add(4);
+        h.add(5);
+
+        int n = h.size();
+
+        long max = -1L;
+
+        int numOfBuilding = 1;
+        for(int i = n-1  ; i >=0 ; i--){
+            if(max < (long) h.get(i) *numOfBuilding) max = Math.max(max, (long) h.get(i) *numOfBuilding);
+            else break;
+            numOfBuilding++;
+        }
+
+        System.out.println(max);
+
     }
 
     static int safePos(int n, int k) {
+        return safePosZeroIndexing(n,k) + 1;
+    }
+
+    static int safePosZeroIndexing(int n, int k) {
         if(n == 1) return 0;
-        return (safePos(n-1, k) + k )%n;
+        return (safePosZeroIndexing(n-1, k) + k )%n;
     }
 }
