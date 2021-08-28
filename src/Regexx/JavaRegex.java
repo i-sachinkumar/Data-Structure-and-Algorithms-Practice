@@ -55,7 +55,21 @@ public class JavaRegex {
 //            String IP = in.next();
 //            System.out.println(IP.matches(new MyRegex().pattern));
 //        }
-        System.out.println((int)'9');
+//        System.out.println((int)'9');
+//        System.out.println('A' - 'a');
+//        String s = "ytfyug";
+//        System.out.println(s.substring(1).toUpperCase());
+//
+//
+        int n = 5;
+        int ans  = 0 ;
+        for(int i = 0 ; i < 32 ; i++){
+            if(((n>>i) & 1) == 1){
+                ans = i;
+            }
+        }
+        System.out.println(ans);
+
     }
 }
 class MyRegex {
