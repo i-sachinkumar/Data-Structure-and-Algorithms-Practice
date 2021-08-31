@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * 1
  * Output:
  * [1]
- * Explaination:
+ * Explanation:
  * Only one queen can be placed
  * in the single cell available.
  * Example 2:
@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * 4
  * Output:
  * [2 4 1 3 ] [3 1 4 2 ]
- * Explaination:
+ * Explanation:
  * These are the 2 possible solutions.
  *
  *
@@ -60,58 +60,56 @@ public class Main {
 
 
     static ArrayList<ArrayList<Integer>> nQueen(int n) {
-        chess  = new int[n][n];
+        chess = new int[n][n];
         return null;
     }
 
 
-
-
-    static boolean isSafe(int n , int i , int j){
+    static boolean isSafe(int n, int i, int j) {
 
         // check in row
-        for(int c = 0 ; c < n ; c++){
-            if(chess[i][c] == 1 && c != j) return false;
+        for (int c = 0; c < n; c++) {
+            if (chess[i][c] == 1 && c != j) return false;
         }
 
         // check in column
-        for(int r = 0 ; r < n ; r++){
-            if(chess[r][j] == 1 && r != i) return false;
+        for (int r = 0; r < n; r++) {
+            if (chess[r][j] == 1 && r != i) return false;
         }
 
         // check for backward diagonal ( \ )
-        for(int r = i, c = j ; r<n && c<n ; ){
-            while(r > 0 && c > 0){
-                r--;
-                c--;
-                if(chess[r][c] == 1) return false;
-            }
+        int r = i, c = j;
+
+        while (r > 0 && c > 0) {
+            r--;
+            c--;
+            if (chess[r][c] == 1) return false;
+        }
 
             r = i ; c = j;
 
-            while(r < n-1 && c < n-1){
-                r++;
-                c++;
-                if(chess[r][c] == 1) return false;
-            }
+        while (r < n - 1 && c < n - 1) {
+            r++;
+            c++;
+            if (chess[r][c] == 1) return false;
         }
 
         // check for forward diagonal ( / )
-        for(int r = i, c = j ; r<n && c<n ; ){
-            while(r < n-1 && c > 0){
+             r = i ; c = j;
+
+            while (r < n - 1 && c > 0) {
                 r++;
                 c--;
-                if(chess[r][c] == 1) return false;
+                if (chess[r][c] == 1) return false;
             }
 
             r = i ; c = j;
 
-            while(r > 0 && c < n-1){
+            while (r > 0 && c < n - 1) {
                 r--;
                 c++;
-                if(chess[r][c] == 1) return false;
+                if (chess[r][c] == 1) return false;
             }
-        }
         return true;
     }
 }
