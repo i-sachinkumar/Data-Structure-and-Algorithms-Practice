@@ -1,5 +1,7 @@
 package NEW;
 
+import java.util.Stack;
+
 /**
  * We define the following terms:
  *
@@ -47,6 +49,12 @@ package NEW;
 
 public class substring {
     public static void main(String[] args) {
+        System.out.println((int)'A'+ " " + (int)'Z');
+
+        System.out.println("aba" == "aba");
+        Stack<Integer> s = new Stack<>();
+        s.empty();
+
         System.out.println(getSmallestAndLargest("Componszer",4));
     }
 
@@ -59,12 +67,16 @@ public class substring {
                     smallest = s.substring(i, i + k);
                     break;
                 }
+                else if((int) s.charAt(i + j) == (int) smallest.charAt(j));
+                else break;
             }
             for(int j= 0 ; j < k ; j++) {
                 if((int)s.charAt(i+j) > (int)largest.charAt(j)){
                     largest = s.substring(i, i+k);
                     break;
                 }
+                else if((int) s.charAt(i + j) == (int) largest.charAt(j));
+                else break;
             }
         }
         return smallest + "\n" + largest;
