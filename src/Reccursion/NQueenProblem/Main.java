@@ -1,6 +1,6 @@
 package Reccursion.NQueenProblem;
 
-import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -39,7 +39,10 @@ import java.util.ArrayList;
  *
  *
  * Your Task:
- * You do not need to read input or print anything. Your task is to complete the function nQueen() which takes n as input parameter and returns a list containing all the possible chessboard configurations in sorted order. Return an empty list if no solution exists.
+ * You do not need to read input or print anything.
+ * Your task is to complete the function nQueen() which takes n as
+ * input parameter and returns a list containing all the possible
+ * chessboard configurations in sorted order. Return an empty list if no solution exists.
  *
  *
  *
@@ -53,18 +56,70 @@ import java.util.ArrayList;
  */
 
 public class Main {
+
     static int[][] chess;
+
+
     public static void main(String[] args) {
+       // int[][] nqueen = nQueen(2);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
 
-    }
-
-
-    static ArrayList<ArrayList<Integer>> nQueen(int n) {
         chess = new int[n][n];
-        return null;
+
+        nQueen(chess,n, 0);
+
+        for(int[] ints : chess){
+            for(int i : ints){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+
+    }
+
+    // By Recursion (Correct)
+    static boolean nQueen(int[][] matrix, int n, int r){
+        if(r >= n) return true;
+
+        for(int c = 0 ; c < n ; c++){
+            if(isSafe(n,r,c)){
+                matrix[r][c] = 1;
+                if(nQueen(matrix, n, r+1)) return true;
+                matrix[r][c] = 0;
+            }
+        }
+        return false;
     }
 
 
+
+    // Using Loop (Not Working Yet)
+    static int[][] nQueen(int n) {
+        int[][] chess = new int[n][n];
+        int[] col_info = new int[n];
+
+        int i = 0;
+        for(; i < n ;  i++){
+            for(int j = col_info[i] ; j < n ;  j++){
+                if(isSafe(n, i, j)){
+                    col_info[i] = j+1;
+                    chess[i][j] = 1;
+                    break;
+                }
+                else if(j == n-1){
+                    col_info[i] = 0;
+                    i = i - 2;
+                    break;
+                }
+            }
+        }
+        return chess;
+    }
+
+
+
+    // to check if queen is safe to place at chess[i][j]
     static boolean isSafe(int n, int i, int j) {
 
         // check in row
@@ -86,7 +141,7 @@ public class Main {
             if (chess[r][c] == 1) return false;
         }
 
-            r = i ; c = j;
+        r = i ; c = j;
 
         while (r < n - 1 && c < n - 1) {
             r++;
@@ -95,7 +150,7 @@ public class Main {
         }
 
         // check for forward diagonal ( / )
-             r = i ; c = j;
+            r = i ; c = j;
 
             while (r < n - 1 && c > 0) {
                 r++;
