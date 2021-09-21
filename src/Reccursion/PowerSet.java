@@ -36,8 +36,13 @@ public class PowerSet {
 
         List<String> l = AllPossibleStrings("abc");
         for (String s : l) {
-            System.out.println(s);
+            System.out.print(s + "  ");
         }
+
+        System.out.println();
+
+
+        permute_and_print_substring("abc",0);
     }
 
     public static List<String> AllPossibleStrings(String s)
@@ -58,5 +63,25 @@ public class PowerSet {
 
         AllPossibleStrings(s, list, l+1 , temp);
 
+    }
+
+    public static void permute_and_print_substring(String s, int j){
+        if(j == s.length()){
+            System.out.print(s+ "  ");
+            return;
+        }
+        for(int i = j ; i < s.length(); i++ ) {
+            s = swapChar(s, i, j);
+            permute_and_print_substring(s,j + 1);
+            s = swapChar(s, i, j);
+        }
+    }
+
+    public static String swapChar(String s, int i, int j){
+        char[] c = s.toCharArray();
+        char temp = c[i];
+        c[i] = c[j];
+        c[j] = temp;
+        return String.valueOf(c);
     }
 }
