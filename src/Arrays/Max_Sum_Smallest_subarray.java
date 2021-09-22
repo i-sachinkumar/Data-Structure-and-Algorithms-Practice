@@ -6,7 +6,8 @@ import java.util.Scanner;
 /**
  * Question
  *
- * Hackerrank link: (https://www.hackerrank.com/contests/week-8-code-hackathon/challenges/largest-sum-contiguous-subarray-5/problem)
+ * Hackerrank link:
+ * (https://www.hackerrank.com/contests/week-8-code-hackathon/challenges/largest-sum-contiguous-subarray-5/problem)
  *
  * You will be given an array which consists of  elements.
  *
@@ -18,7 +19,7 @@ import java.util.Scanner;
  *
  * Input Format
  *
- * First line of input consists of a single digit  denoting the size of array, .
+ * First line of input consists of a single digit  denoting the size of array,
  * Next line consists of  space-separated integers which are elements of the array.
  * Constraints
  *
