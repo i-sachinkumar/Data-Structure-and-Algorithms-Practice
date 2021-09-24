@@ -57,9 +57,6 @@ public class MaxSumSubArray {
         //store subarray sum
         long sum = 0;
 
-        //No. of subarray whose sum is <= X
-        int count = 0;
-
         //maximum sum
         long max = -1;
 
@@ -69,7 +66,6 @@ public class MaxSumSubArray {
                sum += arr[end];
                end++;
             }
-            count += (end-start);
             sum -= arr[start];
             start++;
         }
