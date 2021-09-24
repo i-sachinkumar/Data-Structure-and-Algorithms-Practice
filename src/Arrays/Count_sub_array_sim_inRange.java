@@ -32,8 +32,8 @@ public class Count_sub_array_sim_inRange {
         long sum = 0;
 
         // To store required
-        // number of subarrays.
-        long cnt = 0;
+        // number of subArrays.
+        long count = 0;
 
         // Increment ending index
         // of sliding window one
@@ -57,11 +57,11 @@ public class Count_sub_array_sim_inRange {
 
             // Update count of
             // number of subArrays.
-            cnt += (end - st + 1);
+            count += (end - st + 1);
             end++;
         }
 
-        return cnt;
+        return count;
     }
 
 }
