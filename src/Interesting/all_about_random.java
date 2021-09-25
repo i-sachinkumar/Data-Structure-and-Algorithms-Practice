@@ -53,7 +53,7 @@ public class all_about_random {
         int dice_points = min + r.nextInt(max-min+1);
         System.out.println("Dice Rolled: " + dice_points);
 
-        /** To check validity uncomment this code and run
+        /* To check validity uncomment this code and run
         while(dice_points >=1 && dice_points <=6) {
             System.out.println("Dice Rolled: " + dice_points);
             dice_points = min + r.nextInt(max-min+1);
@@ -64,7 +64,7 @@ public class all_about_random {
         //Now make a biased dice :P (Probability of getting any no. in Fair dice is 1/6)
         // now make a die with Probability of getting 6 is 1/4  =  5/20
         // remaining points have equal probability among themselves (1 - (1/4))/5  =  3/20
-        /** 5 chances out of 20 is for six and remaining scores have 3 chances out of 20  */
+        /* 5 chances out of 20 is for six and remaining scores have 3 chances out of 20  */
         //generate 20 random number [0,19]
         int random = r.nextInt(19);
         int score;
@@ -84,15 +84,22 @@ public class all_about_random {
             else{
                 score_temp = (random_temp/3) + 1;
             }
-            if(score_temp <1 || score_temp >6){
-                System.out.println("Wrong number");
-                break;
-            }
+
             count_each_occurance[score_temp]++;
         }
         for(int i = 1 ; i <=6 ; i++){
             System.out.println("No. of "+ i + ": " + count_each_occurance[i]);
         }
+
+        /*
+           One of the output
+            No. of 1: 15930
+            No. of 2: 15838
+            No. of 3: 15665
+            No. of 4: 15779
+            No. of 5: 15839
+            No. of 6: 20949              : as expected
+         */
 
     }
 }
