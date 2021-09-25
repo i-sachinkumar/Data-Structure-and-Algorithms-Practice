@@ -1,6 +1,8 @@
 package Arrays;
 
 
+import java.math.BigInteger;
+
 public class Count_sub_array_sim_inRange {
     public static void main(String[] args) {
 
@@ -14,6 +16,10 @@ public class Count_sub_array_sim_inRange {
         long count = MaxSubArraySum(arr, n, b) - MaxSubArraySum(arr, n, a-1);
 
         System.out.println(count);
+
+        BigInteger fac = new BigInteger("644464646");
+        fac = fac.multiply(BigInteger.valueOf(2));
+        System.out.println(fac);
     }
 
 
