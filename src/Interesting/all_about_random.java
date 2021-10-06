@@ -75,7 +75,7 @@ public class all_about_random {
         System.out.println("Biased dice rolled: " + score);
 
         // Verifying probability with 100000 cases
-        int[] count_each_occurance = new int[7];
+        int[] count_each_occurrence = new int[7];
 
         for(int i = 0 ; i < 100000 ; i++){
             int random_temp = r.nextInt(19);
@@ -85,14 +85,14 @@ public class all_about_random {
                 score_temp = (random_temp/3) + 1;
             }
 
-            count_each_occurance[score_temp]++;
+            count_each_occurrence[score_temp]++;
         }
         for(int i = 1 ; i <=6 ; i++){
-            System.out.println("No. of "+ i + ": " + count_each_occurance[i]);
+            System.out.println("No. of "+ i + ": " + count_each_occurrence[i]);
         }
 
         /*
-           One of the output
+           One of the outputs
             No. of 1: 15930
             No. of 2: 15838
             No. of 3: 15665
