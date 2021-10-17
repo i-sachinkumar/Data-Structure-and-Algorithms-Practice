@@ -1,5 +1,7 @@
 package GoogleKickStart.RoundG.StayHydrated;
 
+// Google Kick-Start solution in java
+// staying hydrated problem
 
 /**
  * With online classes in full swing,
