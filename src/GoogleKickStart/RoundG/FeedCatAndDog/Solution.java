@@ -1,5 +1,7 @@
 package GoogleKickStart.RoundG.FeedCatAndDog;
 
+// Google Kick-Start solution of round G in java
+// feed cats and dogs
 
 /**
  * Problem
