@@ -1,6 +1,6 @@
 package GoogleKickStart.RoundG.StayHydrated;
 
-// Google Kick-Start solution in java
+// Google Kick-Start solution of round G in java
 // staying hydrated problem
 
 /**
