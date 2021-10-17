@@ -1,6 +1,10 @@
 package Regexx;
 
+import com.sun.source.tree.WhileLoopTree;
+
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Write a class called MyRegex which will contain a string pattern.
@@ -61,15 +65,6 @@ public class JavaRegex {
 //        System.out.println(s.substring(1).toUpperCase());
 //
 //
-        int n = 5;
-        int ans  = 0 ;
-        for(int i = 0 ; i < 32 ; i++){
-            if(((n>>i) & 1) == 1){
-                ans = i;
-            }
-        }
-        System.out.println(ans);
-        //dknebugvyqgihj;lk
 
     }
 }
