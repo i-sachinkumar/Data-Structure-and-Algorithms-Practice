@@ -112,5 +112,25 @@ public class DemoRegex {
 //        if(m11.matches()) System.out.println("Valid DOB");
 //        else System.out.println("Invalid DOB");
 
+
+
+
+
+        //IP address validator 000.000.000.000 - 259.259.259.259
+        // 0.0.0.0 - 00.00.00.00 - 000.000.000.0000
+        //leading zero(es) are allowed, it may contain single or double digits between 0 & 259
+        //e.g. 0.34.56.249  36.000.004.255   4.4.4.4   1.02.003.000
+
+        Pattern p12 = Pattern.compile("(([01][0-9]{2}|2[0-4][0-9]|25[0-5]|[0-9]|[0-9]{2})[.]){3}([01][0-9]{2}|[2][0-4][0-9]|25[0-5]|[0-9]|[0-9]{2})");
+        Matcher m12 = p12.matcher("00.12.249.9");
+        if(m12.matches()) System.out.println("Valid IP");
+        else System.out.println("Invalid IP");
+
+
+
+        String text    =
+                "John writes about this, and John Doe writes about that," +
+                        " and John Wayne writes about everything."
+                ;
     }
 }
