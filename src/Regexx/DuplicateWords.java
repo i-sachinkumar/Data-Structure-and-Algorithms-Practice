@@ -81,6 +81,7 @@ public class DuplicateWords {
         /*
          * \\b  => word bound
          * ?:  => ungroup (will not contain in m.group(index)
+         * \\s   => space
          */
     }
 }
