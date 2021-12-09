@@ -2,8 +2,8 @@ package Hackerrank;
 
 /**
  *
- * link of qs on hackerrank : {@https://www.hackerrank.com/challenges/organizing-containers-of-balls/problem}
- *
+ * link of qs on hackerrank : {https://www.hackerrank.com/challenges/organizing-containers-of-balls/problem}
+ * to open link (ctrl + left_click)
  *
  * David has several containers, each with a number of balls in it.
  * He has just enough containers to sort each type of ball he has into its own container.
