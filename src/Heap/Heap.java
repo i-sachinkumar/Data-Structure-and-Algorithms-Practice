@@ -1,6 +1,7 @@
 package Heap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -75,6 +76,48 @@ public class Heap {
 
 
 
+/****************** Heapify and heapSort *****************************************************************************************************************/
+    public void heapify(int[] a, int l, int r) {
+        int n = r + 1;
+        if (2 * l + 1 >= n) return;
+        else if (2 * l + 2 == n) {
+            if (a[l] < a[2 * l + 1]) {
+                int temp = a[l];
+                a[l] = a[2 * l + 1];
+                a[2 * l + 1] = temp;
+            }
+        } else {
+            int left = a[2 * l + 1];
+            int right = a[2 * l + 2];
+            if (left > right) {
+                if (a[l] < left) {
+                    a[2 * l + 1] = a[l];
+                    a[l] = left;
+                    heapify(a, 2 * l + 1, r);
+                }
+            } else {
+                if (a[l] < right) {
+                    a[2 * l + 2] = a[l];
+                    a[l] = right;
+                    heapify(a, 2 * l + 2, r);
+                }
+            }
+        }
+    }
+
+
+    public void buildHeap(int[] a){
+        for(int i = (a.length-1)/2; i>=0 ; i--){
+            heapify(a, i,  a.length-1);
+        }
+    }
+
+    public void heapSort(int[] a){
+
+    }
+//************** End of heapify & heap Sort ***********************************************************************************************
+
+
 
     public static void main(String[] args) {
         Heap maxHeap = new Heap();
@@ -85,13 +128,19 @@ public class Heap {
         maxHeap.insert(20);
         maxHeap.insert(40);
 
+        System.out.println("max heap: ");
         maxHeap.print();
 
+        System.out.println("after deleting 50: ");
         maxHeap.delete(50);
 
         maxHeap.print();
 
-
+        System.out.println("********** heapify ************");
+        int[] a = {25,35,30,20,40,50};
+        
+        maxHeap.buildHeap(a);
+        System.out.println(Arrays.toString(a));
 
     }
 }
