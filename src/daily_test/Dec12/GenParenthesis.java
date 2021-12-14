@@ -15,7 +15,6 @@ import java.util.List;
  * Output: ["((()))","(()())","(())()","()(())","()()()"]
  *
  *
- *
  * Example 2:
  *
  * Input: n = 1
@@ -26,32 +25,27 @@ import java.util.List;
 
 public class GenParenthesis {
     public static void main(String[] args) {
-
+        System.out.println(generateParenthesis(3));
     }
 
     public static List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
-
-        StringBuilder s = new StringBuilder();
-
-        s.append("(".repeat(Math.max(0, n)));
-        s.append(")".repeat(Math.max(0, n)));
-
-        ans.add(s.toString());
-
-        for(int i = 1 ; i < n ; i++){
-            for(int j = n; j < 2*n-1 ; j++){
-                ans.add(exchangeChar(s.toString(),i,j));
-            }
-        }
+        gen(n, 0, 0, "",ans );
         return ans;
     }
 
-    static String exchangeChar(String s, int i, int j){
-        char[] c = s.toCharArray();
-        char temp = c[i];
-        c[i] = c[j];
-        c[j] = temp;
-        return String.valueOf(c);
+    //
+
+    public static void gen(int n, int i, int j, String s, List<String> ans){
+        if(j>i || i>n) return;
+        else if(i==n && j==n){
+            ans.add(s);
+            return;
+        }
+        else{
+            gen(n, i+1, j, s+"(", ans);
+            gen(n, i, j+1, s+")", ans);
+        }
     }
+
 }
