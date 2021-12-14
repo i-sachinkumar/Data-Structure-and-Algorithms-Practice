@@ -56,4 +56,29 @@ public class MatchingExpression {
 
         return m.matches();
     }
+
+
+
+//    public static boolean isMatch2(String s, String p) {
+//        int s_p = 0;
+//        int p_p = 0;
+//        while(p_p < p.length()){
+//            if(p.charAt(p_p) == '.'){
+//                if(p_p+1 < p.length() && p.charAt(p_p+1) == '*'){
+//                    if(p_p + 2 >= p.length()) s_p = s.length();
+//                    else{
+//                        while(s.charAt(s_p) != p.charAt(p_p+2) && s_p < s.length()){
+//                            s_p++;
+//                        }
+//                    }
+//                }
+//                else{
+//                    s_p++;
+//                    p_p++;
+//                }
+//            }
+//
+//            p_p++;
+//        }
+//    }
 }
