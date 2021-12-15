@@ -52,39 +52,26 @@ import java.util.Scanner;
 
 public class Max_Sum_Smallest_subarray {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] a = new int[n];
 
-        int maxEntry = Integer.MIN_VALUE;
-        for(int i = 0 ; i < n ; i++){
-            a[i] = sc.nextInt();
-            maxEntry = Math.max(maxEntry, a[i]);
-        }
+        int[] nums = {-9, -8 ,-2 ,-4 ,-7 ,3, -6 ,-1, -8};
 
-        //when all entry are negative
-        if(maxEntry < 0) System.out.println("Invalid Input");
-        else if(maxEntry == 0) System.out.println(0);
+        int currSum = 0;
+        int maxSum = 0;
 
-        else {
+        int maxNum = Integer.MIN_VALUE;
 
-            int maxSum = 0;
-            int currSum = 0;
-            for (int i = 0; i < n; i++) {
-                if (currSum > 0) {
-                    maxSum = Math.max(currSum, maxSum);
-                }
-                currSum = currSum + a[i];
-                if (currSum <= 0) {
-                    currSum = 0;
-                }
+        for (int num : nums) {
+            currSum += num;
+            maxNum = Math.max(maxNum, num);
 
+            if (currSum <= 0) {
+                currSum = 0;
+            } else {
+                maxSum = Math.max(maxSum, currSum);
             }
-            maxSum = Math.max(currSum, maxSum);
-
-            System.out.println(maxSum);
-
-
         }
+
+        if(maxNum < 0) System.out.println("invalid");
+        else System.out.println(maxSum);
     }
 }
