@@ -18,7 +18,6 @@ public class ArrayGame {
         if(i < 0 || game[i] == 1) return false;
 
         game[i] = 1;
-
         return canWin(leap, i+1, game) || canWin(leap, i-1, game) || canWin(leap, i+leap, game);
     }
 
