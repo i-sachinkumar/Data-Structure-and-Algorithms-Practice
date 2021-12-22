@@ -23,31 +23,43 @@ public class TwoPulses {
 
     }
 
-    public static int twoPulse(List<String> grid) {
+    public static int twoPulse(List<String> grid){
 
         //last row index
-        int i_end = grid.size()-1;
+        int end_r = grid.size()-1;
 
         //last column index
-        int j_end = grid.get(0).length()-1;
+        int end_c = grid.get(0).length()-1;
 
         //converting into matrix (2D Array)
-        char[][] matrix = new char[i_end+1][j_end+1];
-        for(int i = 0 ; i <= i_end ; i++){
+        char[][] matrix = new char[end_r+1][end_c+1];
+        for(int i = 0 ; i <= end_r ; i++){
             matrix[i] = grid.get(i).toCharArray();
         }
+
+        return twoPulse(matrix,1,1,end_r,end_c);
+    }
+
+    public static int twoPulse(char[][] matrix, int start_r, int start_c, int end_r, int end_c) {
 
         // to store answer
         int ans = 1;
 
-        for(int i = 1 ; i <= i_end-1 ; i++){
-            for(int j = 1 ; j <= j_end-1; j++){
+        for(int i = start_c ; i <= end_r-1 ; i++){
+            for(int j = start_r ; j <= end_c-1; j++){
                 if(matrix[i][j] == 'G') {
-                    int level = 1;
-                    while (isValid(matrix, level, i, j, i_end, j_end)) level++;
-                    level--;
-                    if (level >= 1) {
-                        ans *= ((level * 4) + 1);
+                    int level = 0;
+                    while (isValid(matrix, level+1, i, j, end_r, end_c)) level++;
+                    if (level == 1) {
+                        ans *= ((4) + 1);
+                    }
+                    else if(level > 1){
+                        for(int l = 1 ;  l <= level; l++){
+                            blockUsedCell(matrix, l, i, j);
+
+
+                            ans = Math.max(((4*l) + 1)*twoPulse(matrix,i+1,j, end_r,end_c),ans);
+                        }
                         blockUsedCell(matrix, level, i, j);
                     }
                 }
