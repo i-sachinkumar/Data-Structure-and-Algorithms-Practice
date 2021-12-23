@@ -1,7 +1,12 @@
 package Hackerrank;
 
+
+// Qs Link = {TODO}
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SurfaceArea3d {
     public static void main(String[] args) {
@@ -15,6 +20,10 @@ public class SurfaceArea3d {
 
         System.out.println(surfaceArea(A));
         System.out.println(surfaceArea2(A));
+
+        new ArrayList<Integer>(List.of(-1));
+        Set<Integer> s = new HashSet<>();
+
 
     }
 
