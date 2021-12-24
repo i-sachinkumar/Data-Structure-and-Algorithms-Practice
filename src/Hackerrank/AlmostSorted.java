@@ -1,56 +1,52 @@
 package Hackerrank;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AlmostSorted {
     public static void main(String[] args) {
-
-        // TODO "yet to solve"
+        List<Integer> arr  = new ArrayList<>(List.of(1,5,4,3,2,6));
+        almostSorted(arr);
     }
 
     public static void almostSorted(List<Integer> arr) {
-        int numOfSwap = 0;
         int l = 0;
         int r = 0;
 
-        for(int i = 0 ; i < arr.size() -1; i++ ){
-            for(int j = i+1 ; j < arr.size(); j++){
-                if(arr.get(i) > arr.get(j)){
-                    int temp = arr.get(i);
-                    arr.set(i, arr.get(j));
-                    arr.set(j, temp);
-                    l = i;
-                    r = j;
-                    numOfSwap++;
-                }
+        List<Integer> copy = List.copyOf(arr);
 
-                if(numOfSwap > 1){
-                    l = -1;
-                    r = -1;
+        Collections.sort(arr);
+        int count = 0;
+        for(int i = 0 ; i < arr.size(); i++ ){
+            if(arr.get(i) != copy.get(i)){
+                count++;
+                if(count == 1) l = i;
+                else if(count == 2) r = i;
+                else{
                     break;
                 }
             }
-            if(l < 0) break;
         }
 
-        if(l >= 0){
+        if(count == 2){
             System.out.println("yes");
-            System.out.println("swap " + l + " " + r);
+            System.out.println("swap " + (l+1) + " " + (r+1));
             return;
         }
 
         int l1 = 0;
         int r1 = 0;
-        for(int i = 0 ; i < arr.size()-1; i++){
-            if(arr.get(i) > arr.get(i+1)){
+        for(int i = 0 ; i < copy.size()-1; i++){
+            if(copy.get(i) > copy.get(i+1)){
                 l1 = i;
                 i++;
-                while(i < arr.size()-1 && arr.get(i)>arr.get(i+1)){
+                while(i < copy.size()-1 && copy.get(i)>copy.get(i+1)){
                     i++;
                 }
                 r1 = i;
-                if((l1 == 0 || arr.get(r1) > arr.get(l1-1)) &&
-                        (r1 == arr.size()-1 || arr.get(l1) < arr.get(r1+1))){
+                if((l1 == 0 || copy.get(r1) > copy.get(l1-1)) &&
+                        (r1 == copy.size()-1 || copy.get(l1) < copy.get(r1+1))){
                     break;
                 }
                 else{
@@ -60,15 +56,15 @@ public class AlmostSorted {
             }
         }
 
-        for(int i = r1+1 ; i< arr.size()-1; i++){
-            if(arr.get(i) < arr.get(i+1)){
+        for(int i = r1+1 ; i< copy.size()-1; i++){
+            if(copy.get(i) > copy.get(i+1)){
                 System.out.println("no");
                 return;
             }
         }
 
         System.out.println("yes");
-        System.out.println("reverse " + l1 + " " + r1);
+        System.out.println("reverse " + (l1+1) + " " + (r1+1));
 
     }
 }
