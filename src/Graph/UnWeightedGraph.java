@@ -1,9 +1,6 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 // undirected graph
 public class UnWeightedGraph {
@@ -54,6 +51,52 @@ public class UnWeightedGraph {
         return -1;
     }
 
+    public static boolean isPathAvailable(int source, int destination){
+        // inefficient using bfs
+        return !(shortest_distance(source,destination) == -1);
+    }
+
+    public static boolean isPath(int source,  int destination){
+        if(source == destination) return true;
+        boolean[] isVisited = new boolean[graph.size()];
+
+        Stack<Integer> s = new Stack<>();
+        s.push(source);
+        isVisited[source] = true;
+
+        while (!s.empty()){
+            for(int vert : graph.get(s.pop())){
+                if(!isVisited[vert]) {
+                    s.push(vert);
+                    isVisited[vert] = true;
+                }
+                if (vert == destination) return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public static boolean isPathRec(int source, int destination){
+        boolean[] isVisited = new boolean[graph.size()];
+        return isPathRec(source,destination,isVisited);
+    }
+    public static boolean isPathRec(int source, int destination, boolean[] isVisited){
+        if(source == destination) return true;
+
+        isVisited[source] = true;
+        for(int vert : graph.get(source)){
+            if(!isVisited[vert]){
+
+                // or bitwise operation for each vertex
+                boolean isConnected = isPathRec(vert, destination,isVisited);
+                if(isConnected) return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         int v = 6;
         new UnWeightedGraph(v);
@@ -89,10 +132,16 @@ public class UnWeightedGraph {
 
         // when 5 is unreachable
         System.out.println(shortest_distance(0, 5));
+        System.out.println(isPathAvailable(0, 5));
+        System.out.println(isPath(0, 5));
+        System.out.println(isPathRec(1, 5));
 
         //adding edge (2-5)
         addEdge(2, 5);
-        System.out.println(shortest_distance(0, 5));
 
+        System.out.println(shortest_distance(0, 5));
+        System.out.println(isPathAvailable(0, 5));
+        System.out.println(isPath(0, 5));
+        System.out.println(isPathRec(0, 5));
     }
 }
