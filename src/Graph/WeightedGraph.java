@@ -1,7 +1,6 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class WeightedGraph {
 
@@ -20,6 +19,40 @@ public class WeightedGraph {
             }
             System.out.println("\n");
         }
+    }
+
+
+    // visiting destination in all possible way and storing distance
+    public static int shortest_distance(ArrayList<ArrayList<ArrayList<Integer>>> graph, int source, int destination){
+        // if source and destination is same then return 0
+        if(source == destination) return 0;
+
+        // boolean array to keep record is any vertex is visited
+        boolean[] isVisited = new boolean[graph.size()];
+
+        // it keeps record of distance of any vertex with the source
+        // initially all entries are zero
+        int[] distances = new int[graph.size()];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(source);
+        isVisited[source] = true;
+        while(!q.isEmpty()){
+            int parent = q.remove();
+            for(ArrayList<Integer> v : graph.get(parent)){
+                if(!isVisited[v.get(0)]){
+                    q.add(v.get(0));
+                    isVisited[v.get(0)] = true;
+
+                    //updating distance as distance of parent+1;
+                    //when parent is source itself then distance = 0 and keep increasing by 1 on every cycle
+                    if(distances[parent] == Integer.MAX_VALUE) distances[v.get(0)] = Math.min(distances[v.get(0)],v.get(1));
+                    else distances[v.get(0)] = Math.min(distances[v.get(0)], distances[parent] + v.get(1));
+                }
+            }
+        }
+        return distances[destination];
     }
 
     public static void main(String[] args) {
@@ -56,6 +89,15 @@ public class WeightedGraph {
         addEdge(graph,2, 3, 60);
         addEdge(graph,3, 4, 70);
 
-        print(graph);
+        //print(graph);
+        System.out.println(shortest_distance(graph,2,4));
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((v1, v2) -> v2 - v1);
+        pq.add(4);
+        pq.add(3);
+        pq.add(5);
+        while (!pq.isEmpty()){
+            System.out.print(pq.poll() + " ");
+        }
     }
 }
