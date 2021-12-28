@@ -30,8 +30,15 @@ public class ArraySum {
         System.out.println(slowHowSum(7, new int[]{2,3,4,7}));
         //System.out.println(slowHowSum(300, new int[]{7,14}));
 
-        System.out.println("********************************************************************************");
 
+        System.out.println("********************************************************************************");
+        //fast
+        System.out.println(fastBestSum(7, new int[]{2,3,4,7}, new HashMap<>()));
+        System.out.println(fastBestSum(17, new int[]{2,3, 5,9,8,1,4,7}, new HashMap<>()));
+        System.out.println(fastBestSum(300, new int[]{7,14}, new HashMap<>()));
+
+
+        System.out.println("********************************************************************************");
         //slow
         System.out.println(slowBestSum(7, new int[]{2,3,4,7}));
         System.out.println(slowBestSum(17, new int[]{2,3, 5,9,8,1,4,7}));
@@ -120,14 +127,44 @@ public class ArraySum {
             List<Integer> result = slowBestSum(k - j, arr);
             if (result != null) {
                 result.add(j);
-                if(shortest == null){
+                if(shortest == null || shortest.size() > result.size()){
                     shortest = result;
                 }
-                else if(result.size() < shortest.size()) shortest = result;
             }
         }
 
         return shortest;
+    }
+
+    //fast
+    static List<Integer> fastBestSum(int k, int[] arr, Map<Integer, List<Integer>> memo){
+        if (memo.containsKey(k) && memo.get(k) != null) return new ArrayList<>(memo.get(k));
+        else if(memo.containsKey(k)) return null;
+        if(k == 0) return new ArrayList<>();
+        if(k < 0) return null;
+
+
+        List<Integer> shortest = null;
+
+        for (int j : arr) {
+            List<Integer> result = fastBestSum(k - j, arr, memo);
+            if (result != null) {
+                result.add(j);
+                if(shortest == null || shortest.size() > result.size()){
+                    shortest = new ArrayList<>(result);
+                }
+            }
+        }
+
+
+        if(shortest != null){
+            List<Integer> s = new ArrayList<>(shortest);
+            memo.put(k,s);
+            return shortest;
+        }
+
+        memo.put(k, null);
+        return null;
     }
 
 }
