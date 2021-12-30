@@ -1,4 +1,4 @@
-package Reccursion.Memoization;
+package DynamicProgramming.Memoization;
 
 import java.util.HashMap;
 import java.util.Map;
