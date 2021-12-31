@@ -1,7 +1,7 @@
 package Hackerrank;
 
 
-// Qs Link = {TODO}
+// Qs Link = {https://www.hackerrank.com/challenges/3d-surface-area/problem}
 
 import java.util.ArrayList;
 import java.util.HashSet;
