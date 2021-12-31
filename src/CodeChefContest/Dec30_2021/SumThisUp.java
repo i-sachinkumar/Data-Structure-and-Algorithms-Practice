@@ -24,6 +24,7 @@ public class SumThisUp {
                 a[i] = sc.nextInt();
             }
 
+            // TODO "need to calculate sum with all permutation of array"
             System.out.println(sum(a,n));
         }
 
