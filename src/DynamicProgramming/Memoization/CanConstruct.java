@@ -1,4 +1,4 @@
-package Reccursion.Memoization;
+package DynamicProgramming.Memoization;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -135,4 +135,18 @@ public class CanConstruct {
         memo.put(target, totalCount);
         return totalCount;
     }
+
+
+    // TODO "yet to complete"
+//    public static List<List<String>> allConstruct(String target, String[] wordBank){
+//        if (target.equals("")) return new ArrayList<>(new ArrayList<>());
+//
+//        List<List<String>> result = new ArrayList<>();
+//
+//        for(String word : wordBank){
+//            if(target.indexOf(word) == 0){
+//                if()
+//            }
+//        }
+//    }
 }
