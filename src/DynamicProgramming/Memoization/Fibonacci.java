@@ -6,11 +6,11 @@ public class Fibonacci {
     public static void main(String[] args) {
 
         //fast fibonacci result
-        System.out.println(fastFibonacci(50, new HashMap<>()));
+        //System.out.println(fastFibonacci(50, new HashMap<>()));
 
 
         //slow fibonacci result
-        System.out.println(slowFibonacci(50));
+        System.out.println(slowFibonacci(9000));
     }
 
     public static long slowFibonacci(int n){

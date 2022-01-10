@@ -2,9 +2,21 @@ package DynamicProgramming.Tabulation;
 
 // Qs. Link = {https://leetcode.com/problems/climbing-stairs/}
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClimStairs {
     public static void main(String[] args) {
         System.out.println(climbStairs(6));
+
+        List<String> s = new ArrayList<>();
+        s.add("a");
+        s.add("b");
+        List<String> s1 = new ArrayList<>();
+//        s1.add("a");
+//        s1.add("b");
+
+        System.out.println(s.containsAll(s1));
     }
 
     public static int climbStairs(int n) {

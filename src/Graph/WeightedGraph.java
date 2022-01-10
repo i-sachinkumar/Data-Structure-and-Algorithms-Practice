@@ -70,7 +70,7 @@ public class WeightedGraph {
            /      |          /    |
         [0]      (50)     (40)   (60)
            \      |      /        |
-            (10)  |    /          |
+            (100)  |    /          |
                \  |  /            |
                  [1] --- (30) ---[2]
 
@@ -81,23 +81,16 @@ public class WeightedGraph {
 
          */
 
-        addEdge(graph,0, 1, 10);
+        addEdge(graph,0, 1, 100);
         addEdge(graph,0, 4, 40);
-        addEdge(graph,1, 4, 50);
+        addEdge(graph,1, 4, 60);
         addEdge(graph,1, 2, 30);
         addEdge(graph,1, 3, 40);
         addEdge(graph,2, 3, 60);
         addEdge(graph,3, 4, 70);
 
-        //print(graph);
-        System.out.println(shortest_distance(graph,2,4));
+        print(graph);
+        System.out.println(shortest_distance(graph,0,1));
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>((v1, v2) -> v2 - v1);
-        pq.add(4);
-        pq.add(3);
-        pq.add(5);
-        while (!pq.isEmpty()){
-            System.out.print(pq.poll() + " ");
-        }
     }
 }

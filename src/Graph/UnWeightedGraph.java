@@ -90,6 +90,7 @@ public class UnWeightedGraph {
             if(!isVisited[vert]){
 
                 // or bitwise operation for each vertex
+                // check if any path possible till end or till it find one
                 boolean isConnected = isPathRec(vert, destination,isVisited);
                 if(isConnected) return true;
             }
