@@ -142,5 +142,6 @@ public class Heap {
         maxHeap.buildHeap(a);
         System.out.println(Arrays.toString(a));
 
+
     }
 }

@@ -73,4 +73,47 @@ public class MergeSort {
         }
 
     }
+
+
+    public static void merge1(int[] a, int l, int m, int h){
+
+        int[] left = new int[m-l+1];
+        int[] right = new int[h-m];
+
+        for(int i = 0 ; i < m-l+1; i++){
+            left[i] = a[l+i];
+        }
+        for(int i = 0 ; i < h-m ; i++){
+            right[i] = a[m+i+1];
+        }
+
+        int i = 0;
+        int j = 0;
+
+        while (i < left.length && j < right.length){
+            if(left[i] < right[j]){
+                a[l] = left[i];
+                i++;
+            }
+            else{
+                a[l] = right[j];
+                j++;
+            }
+            l++;
+        }
+
+        // if left sub-array is not iterated completely
+        while(i < left.length){
+            a[l] = left[i];
+            i++;
+            l++;
+        }
+
+        // if right sub-array is not iterated completely
+        while(j < right.length){
+            a[l] = right[j];
+            j++;
+            l++;
+        }
+    }
 }
