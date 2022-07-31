@@ -24,7 +24,7 @@ import java.util.List;
 
 public class GenParenthesis {
     public static void main(String[] args) {
-        System.out.println(generateParenthesis(10));
+        System.out.println(generateParenthesis(4));
     }
 
     public static List<String> generateParenthesis(int n) {
@@ -42,29 +42,13 @@ public class GenParenthesis {
 
         if(i == j && i == n) {
             ans.add(s); //got what u wanted
+            return;
         }
 
         genPar(n, i+1, j, s+"(", ans); //first add open bracket
         genPar(n, i, j+1, s+")", ans); //then close it
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -80,8 +64,5 @@ public class GenParenthesis {
             gen(n, i, j+1, s+")", ans);
         }
     }
-
-
-
 
 }
