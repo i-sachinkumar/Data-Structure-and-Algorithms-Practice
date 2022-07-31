@@ -20,21 +20,38 @@ import java.util.List;
  * Input: n = 1
  * Output: ["()"]
  *
- * TODO "yet to solve";
- ******************* Not solved yet ***************************************************************************************************/
+ ******************* solved ***************************************************************************************************/
 
 public class GenParenthesis {
     public static void main(String[] args) {
-        System.out.println(generateParenthesis(3));
+        System.out.println(generateParenthesis(4));
     }
 
     public static List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
-        gen(n, 0, 0, "",ans );
+        genPar(n, 0, 0, "",ans );
         return ans;
     }
 
     //
+
+
+    public static void genPar(int n, int i, int j, String s, List<String> ans){
+        if(i < j) return; //return where num of closing bracket is more, because no way we can balance it [Ex. ), ()), (()()))]
+        if(i > n) return; //can't be balanced
+
+        if(i == j && i == n) {
+            ans.add(s); //got what u wanted
+            return;
+        }
+
+        genPar(n, i+1, j, s+"(", ans); //first add open bracket
+        genPar(n, i, j+1, s+")", ans); //then close it
+
+    }
+
+
+
 
     public static void gen(int n, int i, int j, String s, List<String> ans){
         if(j>i || i>n) return;
