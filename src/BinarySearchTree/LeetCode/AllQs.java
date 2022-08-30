@@ -56,6 +56,10 @@ public class AllQs {
 
         System.out.println(maxXor(2,4,8));
 
+        //store();
+
+
+        System.out.println(longestPalin("mixrpifeffeclhbvfukbyeqfqo"));
 
         //List<String> sortedTitles = getMovieTitles("Spiderman");
         //System.out.println(sortedTitles);
@@ -532,6 +536,133 @@ public class AllQs {
         return ans;
     }
 
+
+    static int findLongestConseqSubseq(int arr[], int N)
+    {
+        // add your code here
+        Set<Integer> set = new HashSet<>();
+
+//        Map<Integer, Boolean> m = new HashMap<>();
+//        for(int i : arr){
+//            m.put(i, true);
+//        }
+        List<Integer> a = new ArrayList<>();
+        for(int i : arr){
+            if(set.add(i)) a.add(i);
+        }
+
+
+        int j = 0;
+        int max = -1;
+        int count = 1;
+        while(j < a.size()-1){
+            if(a.get(j)+1 == a.get(j+1)){
+                count++;
+            }
+            else{
+                count = 1;
+            }
+            max = Math.max(max, count);
+            j++;
+        }
+
+        return max;
+
+    }
+    public static void store(){
+        for(int i = 1; i <= 30; i++){
+            System.out.println(cs(i));
+        }
+    }
+    public static String cs(int n) {
+        if(n == 1) return "1";
+
+        String s = cs(n-1);
+        String ms = "";
+        for(int i = 0 ; i < s.length();){
+            int count = 1;
+            int j = i;
+            for( ; j < s.length()-1 ; j++){
+                if(s.charAt(j) == s.charAt(j+1)) count++;
+                else break;
+            }
+            if(count>0) ms = ms + count + s.charAt(i);
+            i = j+1;
+        }
+
+        return ms;
+    }
+
+    static String longestPalin(String S){
+        // code here
+        int l = 0;
+        int r = 0;
+        int n = S.length();
+        String ans = "";
+        int max = -1;
+        while(r < n){
+            if(isPal(S, l, r)){
+                if(r-l+1 > max){
+                    max = r-l+1;
+                    ans = S.substring(l, r+1);
+                }
+                r++;
+            }
+            else{
+                if(l > 0 && S.charAt(l-1) == S.charAt(r)){
+                    max += 2;
+                    l--;
+                    ans = S.substring(l, r+1);
+                }
+                else{
+                    l = r;
+                    r--;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    static boolean isPal(String s, int l, int r){
+        while(l < r){
+            if(s.charAt(l) != s.charAt(r)) return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+
+    static String longestPalin2(String S){
+        // code here
+        int n = S.length();
+        String ans = "";
+        boolean[][] dp = new boolean[n][n];
+
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0, k = i ; j < n && k < n ; j++, k++){
+                if(j == k) dp[j][k] = true;
+                else if(j+1 == k){
+                    if(S.charAt(j) == S.charAt(k)) dp[j][k] = true;
+                }
+                else{
+                    if(dp[j+1][k-1] && S.charAt(j) == S.charAt(k)) dp[j][k] = true;
+                }
+            }
+        }
+        int max = -1;
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0; j < n ; j++){
+                if(dp[i][j]){
+                    if(j-i+1 > max){
+                        max = j-i+1;
+                        ans = S.substring(i, j+1);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
 
 //    public static List<String> getMovieTitles(String title) {
 //        String url = "https://jsonmock.hackerrank.com/api/movies/search/?Title=%s";
