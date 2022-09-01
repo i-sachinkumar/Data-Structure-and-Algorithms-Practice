@@ -305,6 +305,7 @@ public class AllQs {
         inOrder(root, l);
         return balanceBST(l,  0, l.size()-1);
     }
+
     void inOrder(TreeNode root, List<Integer> l){
         if(root == null) return;
         inOrder(root.left, l);
