@@ -59,12 +59,11 @@ public class MergeSort {
         }
 
         // if left sub-array is not iterated completely
-        while(i < left.length){
+        while(i < left.length) {
             a[l] = left[i];
             i++;
             l++;
         }
-
         // if right sub-array is not iterated completely
         while(j < right.length){
             a[l] = right[j];
