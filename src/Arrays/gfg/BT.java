@@ -19,7 +19,7 @@ public class BT {
     }
 
     public static void main(String[] args) {
-
+        inOP(inOrder(null, "4(2(3)(1))(6(5))"));
     }
 
     public static void inorderIterative(Node root)
@@ -230,5 +230,174 @@ public class BT {
             }
         }
         return ans;
+    }
+
+    static boolean check=true;
+
+    //Function to check whether a binary tree is balanced or not.
+    static boolean isBalanced(Node root)
+    {
+        height(root);
+        return check;
+    }
+
+    static int height(Node root){
+        if(root==null){
+            return 0;
+        }
+        if(!check) return -1;
+        int lh=height(root.left);
+        int rh=height(root.right);
+
+        if(Math.abs(lh-rh) > 1){
+            check=false;
+        }
+        return 1+Math.max(lh,rh);
+    }
+
+    public static ArrayList<Integer> diagonal(Node root)
+    {
+        //add your code here.
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        Queue<Node> curr = new LinkedList<>();
+        Queue<Node> next = new LinkedList<>();
+
+        if(root == null) return ans;
+        curr.add(root);
+        while(!curr.isEmpty() || !next.isEmpty()){
+            Node temp = curr.poll();
+            ans.add(temp.data);
+
+            if(temp.right != null){
+                curr.add(temp.right);
+            }
+            if(temp.left != null){
+                next.add(temp.left);
+            }
+
+            if(curr.isEmpty() && !next.isEmpty()){
+                curr.add(next.poll());
+            }
+        }
+
+        return ans;
+    }
+
+
+    // boundary traversal
+    ArrayList <Integer> boundary(Node node)
+    {
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        if(node == null) return ans;
+
+        Node temp = node;
+        if(temp.left != null) {
+            while (true) {
+                //temp.left != null || temp.righht != null
+                ans.add(temp.data);
+                if (temp.left != null) temp = temp.left;
+                else if (temp.right != null) temp = temp.right;
+                else {
+                    ans.remove(ans.size() - 1);
+                    break;
+                }
+            }
+        }
+        else{
+            if(temp.right != null) ans.add(temp.data);
+        }
+
+        temp = node;
+        inOrder(temp, ans);
+        temp = node;
+        temp = temp.right;
+        if(temp == null) return ans;
+        Stack<Integer> right = new Stack<>();
+
+        while(true){
+            right.push(temp.data);
+            if(temp.right != null) temp = temp.right;
+            else if(temp.left != null) temp = temp.left;
+            else {
+                right.pop();
+                break;
+            }
+        }
+
+
+        while(!right.empty()){
+            ans.add(right.pop());
+        }
+        return ans;
+    }
+
+    void inOrder(Node root, ArrayList<Integer> ans){
+        if(root == null) return;
+
+        if(root.left == null && root.right == null) ans.add(root.data);
+        inOrder(root.left, ans);
+        inOrder(root.right, ans);
+    }
+
+    static Node inOrder(Node root, String s){
+        if(s.length() < 1) return root;
+        if(root == null) {
+            root = new Node(s.charAt(0) - '0');
+        }
+        Stack<Character> st = new Stack<>();
+        int p = -1;
+        for(int i = 1 ; i < s.length() ;i++){
+            if(s.charAt(i) == '(') st.push('(');
+            if(!st.empty() && s.charAt(i) == ')' && st.peek() == '(') st.pop();
+
+            if(st.empty()){
+                p = i;
+                break;
+            }
+        }
+        if(p != -1) {
+            root.left = inOrder(root.left, s.substring(2, p));
+            root.right = inOrder(root.right, s.substring(p + 2));
+        }
+        return root;
+    }
+
+    static void inOP(Node root){
+        if(root == null) {
+
+            System.out.print("N ");
+            return;
+        }
+        System.out.print(root.data + " ");
+        inOP(root.left);
+        inOP(root.right);
+    }
+
+
+
+    //Function to convert binary tree to doubly linked list and return it.
+    static Node ans = new Node(0);
+    static Node temp = ans;
+    static Stack<Integer> st = new Stack<>();
+    static Node bToDLL(Node root) {
+        inOrder(root);
+        if(!st.empty()) st.pop();
+        while(!st.empty()){
+            temp.left = new Node(st.pop());
+            temp = temp.left;
+        }
+        return ans.right;
+    }
+
+    static void inOrder(Node root){
+        if(root == null) return;
+
+        inOrder(root.left);
+        temp.right = new Node(root.data);
+        st.push(root.data);
+        temp = temp.right;
+        inOrder(root.right);
     }
 }
