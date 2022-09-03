@@ -19,7 +19,12 @@ public class BT {
     }
 
     public static void main(String[] args) {
-        inOP(inOrder(null, "4(2(3)(1))(6(5))"));
+        //inOP(inOrder(null, "4(2(3)(1))(6(5))"));
+
+        int inorder[] = {1, 6, 8, 7};
+        int preorder[] = {1, 6, 7, 8};
+
+        buildTree(inorder, preorder, 4);
     }
 
     public static void inorderIterative(Node root)
@@ -400,4 +405,174 @@ public class BT {
         temp = temp.right;
         inOrder(root.right);
     }
+
+
+    public static Node buildTree(int[] inorder, int[] preorder, int n)
+    {
+        // code here
+        if(n <= 0) return null;
+
+        Node root = new Node(preorder[0]);
+        int ind = index(inorder, preorder[0]);
+
+        int[] left = subArray(inorder, 0, ind-1);
+        int[] leftPre = subArray(preorder, 1, ind);
+        int[] right = subArray(inorder, ind+1, n-1);
+        int[] rightPre = subArray(preorder, ind+1, n-1);
+
+        if(left!= null && leftPre != null) root.left = buildTree(left, leftPre, left.length);
+        if(right!= null && rightPre != null) root.right = buildTree(right, rightPre, right.length);
+
+        return root;
+    }
+
+    static int index(int[] a, int n){
+        for(int i = 0 ; i < a.length ; i++){
+            if(a[i] == n) return i;
+        }
+        return -1;
+    }
+
+    static int[] subArray(int[] a, int i, int j) {
+        if (i > j) return null;
+        int[] ans = new int[j - 1 + 1];
+        int k = 0;
+        while (i <= j) {
+            ans[k] = a[i];
+            i++;
+            k++;
+        }
+        return ans;
+    }
+
+
+    static boolean flag=true;
+    static boolean check(Node root)
+    {
+        int sameLevel=-1;
+        return helper(root,0,sameLevel);
+
+    }
+    static boolean helper(Node node,int level,int sameLevel){
+        if(node==null) return true;
+
+        if(!flag) return false;
+        if(node.left==null && node.right==null){
+            if(sameLevel==-1) sameLevel=level;
+            else {
+                if(sameLevel!=level){
+                    flag=false;
+                    return false;
+                }
+            }
+        }
+        return helper(node.left,level+1,sameLevel) && helper(node.right,level+1,sameLevel);
+    }
+
+    public void toSumTree(Node root){
+        //add code here.
+        toSumTree2(root);
+    }
+
+    public int toSumTree2(Node root){
+        if(root == null) return 0;
+
+        int l = toSumTree2(root.left);
+        int r = toSumTree2(root.right);
+
+        int curr = root.data;
+        root.data = l + r;
+
+        //if(root.left == null && root.right == null) return curr;
+        return l+r+curr;
+    }
+
+    //func Flatten binary tree to linked list
+    public static void flatten(Node root)
+    {
+        while(root != null){
+            Node temp = root;
+            Node left = root.left;
+            Node right = root.right;
+
+            if(left != null){
+                root.right = left;
+                root.left = null;
+                while(temp.right != null){
+                    temp = temp.right;
+                }
+                temp.right = right;
+            }
+            root = root.right;
+        }
+
+    }
+
+
+    //Minimum swap required to convert binary tree to binary search tree
+    public static int minSwaps(int n, int[] A) {
+        // code here
+        List<Integer> l = new ArrayList<>();
+        minSwaps(n, A, l,0);
+        //System.out.println(l);
+        return minSwap(n, l);
+    }
+
+    public static void minSwaps(int n, int[] A, List<Integer> l, int i) {
+        // code here
+        if(i>=n) return;
+
+        minSwaps(n, A, l, 2*i +1);
+
+        l.add(A[i]);
+
+        minSwaps(n, A, l, 2*i +2);
+    }
+
+    static int minSwap(int n, List<Integer> list){
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> arr = new ArrayList<>(list);
+        Collections.sort(arr);
+        for(int i=0;i<list.size();i++){
+            map.put(list.get(i),i);
+        }
+        int count =0;
+        for(int i=0;i<list.size();i++){
+            int x = list.get(i);
+            if(list.get(i)!=arr.get(i)){
+                count++;
+                Collections.swap(list, i, map.get(arr.get(i)));
+                map.put(x, map.get(arr.get(i)));
+                map.put(arr.get(i), i);
+            }
+        }
+        return count;
+    }
+
+    boolean ans2 = true;
+    boolean isSumTree(Node root)
+    {
+        // Your code here
+        isSumTree2(root);
+
+        return ans2;
+
+    }
+
+    int isSumTree2(Node root)
+    {
+        // Your code here
+        if(!ans2)  return -1;
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return root.data;
+
+        int l = isSumTree2(root.left);
+        int r = isSumTree2(root.right);
+
+        if(l+r != root.data) ans2 = false;
+
+        return root.data + l + r;
+    }
+
+
 }
