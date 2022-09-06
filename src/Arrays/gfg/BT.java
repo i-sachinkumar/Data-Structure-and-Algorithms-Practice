@@ -574,7 +574,48 @@ public class BT {
         return root.data + l + r;
     }
 
+    //Function to return the lowest common ancestor in a Binary Tree.
+    Node lca(Node root, int n1,int n2)
+    {
+        if(root==null || root.data==n1 || root.data==n2){
+            return root;
+        }
 
-//wd fn
+        Node left=lca(root.left,n1,n2);
+        Node right=lca(root.right,n1,n2);
+
+        if(left==null){
+            return right;
+        }else{
+            if(right==null){
+                return left;
+            }
+
+
+        }
+        return root;
+    }
+
+    // Given a Binary Tree of size N, you need to find all the possible paths
+    // from root node to all the leaf node's of the binary tree.
+    public ArrayList<ArrayList<Integer>> Paths(Node root){
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        helper(root,ans,list);
+        return ans;
+    }
+    public void helper(Node root,ArrayList<ArrayList<Integer>> ans,ArrayList<Integer> list){
+        list.add(root.data);
+        if(root.left==null && root.right==null){
+            ans.add(new ArrayList<Integer>(list));
+        }
+        if(root.left!=null) {
+            helper(root.left,ans,list);
+        }
+        if(root.right!=null){
+            helper(root.right,ans,list);
+        }
+        list.remove(list.size()-1);
+    }
 
 }
