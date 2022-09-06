@@ -5,14 +5,12 @@ import java.util.*;
 
 public class BT {
 
-    static class Node
-    {
+    static class Node {
         int data;
         Node left, right;
 
         // Function to create a new binary tree node having a given key
-        public Node(int key)
-        {
+        public Node(int key) {
             data = key;
             left = right = null;
         }
@@ -27,8 +25,7 @@ public class BT {
         buildTree(inorder, preorder, 4);
     }
 
-    public static void inorderIterative(Node root)
-    {
+    public static void inorderIterative(Node root) {
         // create an empty stack
         Stack<Node> stack = new Stack<>();
 
@@ -36,16 +33,13 @@ public class BT {
         Node curr = root;
 
         // if the current node is null and the stack is also empty, we are done
-        while (!stack.empty() || curr != null)
-        {
+        while (!stack.empty() || curr != null) {
             // if the current node exists, push it into the stack (defer it)
             // and move to its left child
-            if (curr != null)
-            {
+            if (curr != null) {
                 stack.push(curr);
                 curr = curr.left;
-            }
-            else {
+            } else {
                 // otherwise, if the current node is null, pop an element from
                 // the stack, print it, and finally set the current node to its
                 // right child
@@ -59,87 +53,83 @@ public class BT {
 
 
     //Function to return list containing elements of left view of binary tree.
-    ArrayList<Integer> leftView(Node root)
-    {
+    ArrayList<Integer> leftView(Node root) {
         Map<Integer, Integer> map = new HashMap<>();
         ArrayList<Integer> ans = new ArrayList<>();
 
         leftView(root, map, 0);
 
         int l = 0;
-        while(map.containsKey(l)){
+        while (map.containsKey(l)) {
             ans.add(map.get(l));
             l++;
         }
         return ans;
     }
 
-    void leftView(Node root, Map<Integer, Integer> map, int l)
-    {
-        if(root == null) return;
+    void leftView(Node root, Map<Integer, Integer> map, int l) {
+        if (root == null) return;
 
-        if(!map.containsKey(l)) map.put(l, root.data);
+        if (!map.containsKey(l)) map.put(l, root.data);
 
-        leftView(root.left, map, l+1);
-        leftView(root.right, map, l+1);
+        leftView(root.left, map, l + 1);
+        leftView(root.right, map, l + 1);
     }
 
 
-
-
-    ArrayList<Integer> leftView_opt(Node root)
-    {
+    ArrayList<Integer> leftView_opt(Node root) {
         ArrayList<Integer> rs = new ArrayList<>();
         leftView2(root, rs, 0);
         return rs;
     }
-    void leftView2(Node root, ArrayList<Integer> lvl,int level ){
-        if(root==null){
-            return ;
-        }
-        if(lvl.size()==level) lvl.add(root.data);
 
-        leftView2(root.left,lvl,level+1);
-        leftView2(root.right,lvl,level+1);
+    void leftView2(Node root, ArrayList<Integer> lvl, int level) {
+        if (root == null) {
+            return;
+        }
+        if (lvl.size() == level) lvl.add(root.data);
+
+        leftView2(root.left, lvl, level + 1);
+        leftView2(root.right, lvl, level + 1);
     }
 
     /**
      * Top View
      */
-    static class pair{
+    static class pair {
         Node node;
         int hd;
-        pair(Node node,int hd){
-            this.node=node;
-            this.hd=hd;
+
+        pair(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
         }
     }
 
     //Function to return a list of nodes visible from the top view
     //from left to right in Binary Tree.
-    static ArrayList<Integer> topView(Node root)
-    {
+    static ArrayList<Integer> topView(Node root) {
         ArrayList<Integer> ans = new ArrayList<>();
-        if(root==null){
+        if (root == null) {
             return ans;
         }
 
-        Map<Integer,Integer> map=new TreeMap<>();
-        Queue<pair> q=new LinkedList<pair>();
-        q.add(new pair(root,0));
-        while(!q.isEmpty()){
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<pair> q = new LinkedList<pair>();
+        q.add(new pair(root, 0));
+        while (!q.isEmpty()) {
 
-            pair it=q.remove();
+            pair it = q.remove();
 
-            int hd=it.hd;
-            Node temp=it.node;
+            int hd = it.hd;
+            Node temp = it.node;
 
             map.computeIfAbsent(hd, k -> temp.data);
-            if(temp.left!=null){
-                q.add(new pair(temp.left,hd-1));
+            if (temp.left != null) {
+                q.add(new pair(temp.left, hd - 1));
             }
-            if(temp.right!=null){
-                q.add(new pair(temp.right,hd+1));
+            if (temp.right != null) {
+                q.add(new pair(temp.right, hd + 1));
             }
         }
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
@@ -152,33 +142,32 @@ public class BT {
 
     //Function to return a list of nodes visible from the bottom view
     //from left to right in Binary Tree.
-    static ArrayList<Integer> bottomView(Node root)
-    {
+    static ArrayList<Integer> bottomView(Node root) {
         ArrayList<Integer> ans = new ArrayList<Integer>();
 
 
-        if(root==null){
+        if (root == null) {
 
             return ans;
 
         }
 
-        Map<Integer,Integer> map=new TreeMap<>();
-        Queue<pair> q=new LinkedList<pair>();
-        q.add(new pair(root,0));
-        while(!q.isEmpty()){
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<pair> q = new LinkedList<pair>();
+        q.add(new pair(root, 0));
+        while (!q.isEmpty()) {
 
-            pair it=q.remove();
+            pair it = q.remove();
 
-            int hd=it.hd;
-            Node temp=it.node;
+            int hd = it.hd;
+            Node temp = it.node;
 
-            map.put(hd,temp.data);
-            if(temp.left!=null){
-                q.add(new pair(temp.left,hd-1));
+            map.put(hd, temp.data);
+            if (temp.left != null) {
+                q.add(new pair(temp.left, hd - 1));
             }
-            if(temp.right!=null){
-                q.add(new pair(temp.right,hd+1));
+            if (temp.right != null) {
+                q.add(new pair(temp.right, hd + 1));
             }
         }
         for (Iterator<Map.Entry<Integer, Integer>> entries = map.entrySet().iterator(); entries.hasNext(); ) {
@@ -190,9 +179,8 @@ public class BT {
     }
 
     //Function to store the zig zag order traversal of tree in a list.
-    ArrayList<Integer> zigZagTraversal(Node root)
-    {
-        ArrayList<Integer> ans=new ArrayList<Integer>();
+    ArrayList<Integer> zigZagTraversal(Node root) {
+        ArrayList<Integer> ans = new ArrayList<Integer>();
         // if null then return
         if (root == null) {
             return ans;
@@ -218,9 +206,8 @@ public class BT {
                 if (node.right != null) {
                     nextLevel.push(node.right);
                 }
-            }
-            else {
-                if (node.right!= null) {
+            } else {
+                if (node.right != null) {
                     nextLevel.push(node.right);
                 }
                 if (node.left != null) {
@@ -237,51 +224,49 @@ public class BT {
         return ans;
     }
 
-    static boolean check=true;
+    static boolean check = true;
 
     //Function to check whether a binary tree is balanced or not.
-    static boolean isBalanced(Node root)
-    {
+    static boolean isBalanced(Node root) {
         height(root);
         return check;
     }
 
-    static int height(Node root){
-        if(root==null){
+    static int height(Node root) {
+        if (root == null) {
             return 0;
         }
-        if(!check) return -1;
-        int lh=height(root.left);
-        int rh=height(root.right);
+        if (!check) return -1;
+        int lh = height(root.left);
+        int rh = height(root.right);
 
-        if(Math.abs(lh-rh) > 1){
-            check=false;
+        if (Math.abs(lh - rh) > 1) {
+            check = false;
         }
-        return 1+Math.max(lh,rh);
+        return 1 + Math.max(lh, rh);
     }
 
-    public static ArrayList<Integer> diagonal(Node root)
-    {
+    public static ArrayList<Integer> diagonal(Node root) {
         //add your code here.
         ArrayList<Integer> ans = new ArrayList<>();
 
         Queue<Node> curr = new LinkedList<>();
         Queue<Node> next = new LinkedList<>();
 
-        if(root == null) return ans;
+        if (root == null) return ans;
         curr.add(root);
-        while(!curr.isEmpty() || !next.isEmpty()){
+        while (!curr.isEmpty() || !next.isEmpty()) {
             Node temp = curr.poll();
             ans.add(temp.data);
 
-            if(temp.right != null){
+            if (temp.right != null) {
                 curr.add(temp.right);
             }
-            if(temp.left != null){
+            if (temp.left != null) {
                 next.add(temp.left);
             }
 
-            if(curr.isEmpty() && !next.isEmpty()){
+            if (curr.isEmpty() && !next.isEmpty()) {
                 curr.add(next.poll());
             }
         }
@@ -291,14 +276,13 @@ public class BT {
 
 
     // boundary traversal
-    ArrayList <Integer> boundary(Node node)
-    {
+    ArrayList<Integer> boundary(Node node) {
         ArrayList<Integer> ans = new ArrayList<>();
 
-        if(node == null) return ans;
+        if (node == null) return ans;
 
         Node temp = node;
-        if(temp.left != null) {
+        if (temp.left != null) {
             while (true) {
                 //temp.left != null || temp.righht != null
                 ans.add(temp.data);
@@ -309,22 +293,21 @@ public class BT {
                     break;
                 }
             }
-        }
-        else{
-            if(temp.right != null) ans.add(temp.data);
+        } else {
+            if (temp.right != null) ans.add(temp.data);
         }
 
         temp = node;
         inOrder(temp, ans);
         temp = node;
         temp = temp.right;
-        if(temp == null) return ans;
+        if (temp == null) return ans;
         Stack<Integer> right = new Stack<>();
 
-        while(true){
+        while (true) {
             right.push(temp.data);
-            if(temp.right != null) temp = temp.right;
-            else if(temp.left != null) temp = temp.left;
+            if (temp.right != null) temp = temp.right;
+            else if (temp.left != null) temp = temp.left;
             else {
                 right.pop();
                 break;
@@ -332,45 +315,45 @@ public class BT {
         }
 
 
-        while(!right.empty()){
+        while (!right.empty()) {
             ans.add(right.pop());
         }
         return ans;
     }
 
-    void inOrder(Node root, ArrayList<Integer> ans){
-        if(root == null) return;
+    void inOrder(Node root, ArrayList<Integer> ans) {
+        if (root == null) return;
 
-        if(root.left == null && root.right == null) ans.add(root.data);
+        if (root.left == null && root.right == null) ans.add(root.data);
         inOrder(root.left, ans);
         inOrder(root.right, ans);
     }
 
-    static Node inOrder(Node root, String s){
-        if(s.length() < 1) return root;
-        if(root == null) {
+    static Node inOrder(Node root, String s) {
+        if (s.length() < 1) return root;
+        if (root == null) {
             root = new Node(s.charAt(0) - '0');
         }
         Stack<Character> st = new Stack<>();
         int p = -1;
-        for(int i = 1 ; i < s.length() ;i++){
-            if(s.charAt(i) == '(') st.push('(');
-            if(!st.empty() && s.charAt(i) == ')' && st.peek() == '(') st.pop();
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == '(') st.push('(');
+            if (!st.empty() && s.charAt(i) == ')' && st.peek() == '(') st.pop();
 
-            if(st.empty()){
+            if (st.empty()) {
                 p = i;
                 break;
             }
         }
-        if(p != -1) {
+        if (p != -1) {
             root.left = inOrder(root.left, s.substring(2, p));
             root.right = inOrder(root.right, s.substring(p + 2));
         }
         return root;
     }
 
-    static void inOP(Node root){
-        if(root == null) {
+    static void inOP(Node root) {
+        if (root == null) {
 
             System.out.print("N ");
             return;
@@ -381,23 +364,23 @@ public class BT {
     }
 
 
-
     //Function to convert binary tree to doubly linked list and return it.
     static Node ans = new Node(0);
     static Node temp = ans;
     static Stack<Integer> st = new Stack<>();
+
     static Node bToDLL(Node root) {
         inOrder(root);
-        if(!st.empty()) st.pop();
-        while(!st.empty()){
+        if (!st.empty()) st.pop();
+        while (!st.empty()) {
             temp.left = new Node(st.pop());
             temp = temp.left;
         }
         return ans.right;
     }
 
-    static void inOrder(Node root){
-        if(root == null) return;
+    static void inOrder(Node root) {
+        if (root == null) return;
 
         inOrder(root.left);
         temp.right = new Node(root.data);
@@ -407,28 +390,27 @@ public class BT {
     }
 
 
-    public static Node buildTree(int[] inorder, int[] preorder, int n)
-    {
+    public static Node buildTree(int[] inorder, int[] preorder, int n) {
         // code here
-        if(n <= 0) return null;
+        if (n <= 0) return null;
 
         Node root = new Node(preorder[0]);
         int ind = index(inorder, preorder[0]);
 
-        int[] left = subArray(inorder, 0, ind-1);
+        int[] left = subArray(inorder, 0, ind - 1);
         int[] leftPre = subArray(preorder, 1, ind);
-        int[] right = subArray(inorder, ind+1, n-1);
-        int[] rightPre = subArray(preorder, ind+1, n-1);
+        int[] right = subArray(inorder, ind + 1, n - 1);
+        int[] rightPre = subArray(preorder, ind + 1, n - 1);
 
-        if(left!= null && leftPre != null) root.left = buildTree(left, leftPre, left.length);
-        if(right!= null && rightPre != null) root.right = buildTree(right, rightPre, right.length);
+        if (left != null && leftPre != null) root.left = buildTree(left, leftPre, left.length);
+        if (right != null && rightPre != null) root.right = buildTree(right, rightPre, right.length);
 
         return root;
     }
 
-    static int index(int[] a, int n){
-        for(int i = 0 ; i < a.length ; i++){
-            if(a[i] == n) return i;
+    static int index(int[] a, int n) {
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == n) return i;
         }
         return -1;
     }
@@ -446,36 +428,37 @@ public class BT {
     }
 
 
-    static boolean flag=true;
-    static boolean check(Node root)
-    {
-        int sameLevel=-1;
-        return helper(root,0,sameLevel);
+    static boolean flag = true;
+
+    static boolean check(Node root) {
+        int sameLevel = -1;
+        return helper(root, 0, sameLevel);
 
     }
-    static boolean helper(Node node,int level,int sameLevel){
-        if(node==null) return true;
 
-        if(!flag) return false;
-        if(node.left==null && node.right==null){
-            if(sameLevel==-1) sameLevel=level;
+    static boolean helper(Node node, int level, int sameLevel) {
+        if (node == null) return true;
+
+        if (!flag) return false;
+        if (node.left == null && node.right == null) {
+            if (sameLevel == -1) sameLevel = level;
             else {
-                if(sameLevel!=level){
-                    flag=false;
+                if (sameLevel != level) {
+                    flag = false;
                     return false;
                 }
             }
         }
-        return helper(node.left,level+1,sameLevel) && helper(node.right,level+1,sameLevel);
+        return helper(node.left, level + 1, sameLevel) && helper(node.right, level + 1, sameLevel);
     }
 
-    public void toSumTree(Node root){
+    public void toSumTree(Node root) {
         //add code here.
         toSumTree2(root);
     }
 
-    public int toSumTree2(Node root){
-        if(root == null) return 0;
+    public int toSumTree2(Node root) {
+        if (root == null) return 0;
 
         int l = toSumTree2(root.left);
         int r = toSumTree2(root.right);
@@ -484,21 +467,20 @@ public class BT {
         root.data = l + r;
 
         //if(root.left == null && root.right == null) return curr;
-        return l+r+curr;
+        return l + r + curr;
     }
 
     //func Flatten binary tree to linked list
-    public static void flatten(Node root)
-    {
-        while(root != null){
+    public static void flatten(Node root) {
+        while (root != null) {
             Node temp = root;
             Node left = root.left;
             Node right = root.right;
 
-            if(left != null){
+            if (left != null) {
                 root.right = left;
                 root.left = null;
-                while(temp.right != null){
+                while (temp.right != null) {
                     temp = temp.right;
                 }
                 temp.right = right;
@@ -513,33 +495,33 @@ public class BT {
     public static int minSwaps(int n, int[] A) {
         // code here
         List<Integer> l = new ArrayList<>();
-        minSwaps(n, A, l,0);
+        minSwaps(n, A, l, 0);
         //System.out.println(l);
         return minSwap(n, l);
     }
 
     public static void minSwaps(int n, int[] A, List<Integer> l, int i) {
         // code here
-        if(i>=n) return;
+        if (i >= n) return;
 
-        minSwaps(n, A, l, 2*i +1);
+        minSwaps(n, A, l, 2 * i + 1);
 
         l.add(A[i]);
 
-        minSwaps(n, A, l, 2*i +2);
+        minSwaps(n, A, l, 2 * i + 2);
     }
 
-    static int minSwap(int n, List<Integer> list){
+    static int minSwap(int n, List<Integer> list) {
         Map<Integer, Integer> map = new HashMap<>();
         List<Integer> arr = new ArrayList<>(list);
         Collections.sort(arr);
-        for(int i=0;i<list.size();i++){
-            map.put(list.get(i),i);
+        for (int i = 0; i < list.size(); i++) {
+            map.put(list.get(i), i);
         }
-        int count =0;
-        for(int i=0;i<list.size();i++){
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
             int x = list.get(i);
-            if(list.get(i)!=arr.get(i)){
+            if (list.get(i) != arr.get(i)) {
                 count++;
                 Collections.swap(list, i, map.get(arr.get(i)));
                 map.put(x, map.get(arr.get(i)));
@@ -550,8 +532,8 @@ public class BT {
     }
 
     boolean ans2 = true;
-    boolean isSumTree(Node root)
-    {
+
+    boolean isSumTree(Node root) {
         // Your code here
         isSumTree2(root);
 
@@ -559,35 +541,33 @@ public class BT {
 
     }
 
-    int isSumTree2(Node root)
-    {
+    int isSumTree2(Node root) {
         // Your code here
-        if(!ans2)  return -1;
-        if(root == null) return 0;
-        if(root.left == null && root.right == null) return root.data;
+        if (!ans2) return -1;
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return root.data;
 
         int l = isSumTree2(root.left);
         int r = isSumTree2(root.right);
 
-        if(l+r != root.data) ans2 = false;
+        if (l + r != root.data) ans2 = false;
 
         return root.data + l + r;
     }
 
     //Function to return the lowest common ancestor in a Binary Tree.
-    Node lca(Node root, int n1,int n2)
-    {
-        if(root==null || root.data==n1 || root.data==n2){
+    Node lca(Node root, int n1, int n2) {
+        if (root == null || root.data == n1 || root.data == n2) {
             return root;
         }
 
-        Node left=lca(root.left,n1,n2);
-        Node right=lca(root.right,n1,n2);
+        Node left = lca(root.left, n1, n2);
+        Node right = lca(root.right, n1, n2);
 
-        if(left==null){
+        if (left == null) {
             return right;
-        }else{
-            if(right==null){
+        } else {
+            if (right == null) {
                 return left;
             }
 
@@ -598,24 +578,68 @@ public class BT {
 
     // Given a Binary Tree of size N, you need to find all the possible paths
     // from root node to all the leaf node's of the binary tree.
-    public ArrayList<ArrayList<Integer>> Paths(Node root){
-        ArrayList<ArrayList<Integer>> ans=new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> list=new ArrayList<Integer>();
-        helper(root,ans,list);
+    public ArrayList<ArrayList<Integer>> Paths(Node root) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        helper(root, ans, list);
         return ans;
     }
-    public void helper(Node root,ArrayList<ArrayList<Integer>> ans,ArrayList<Integer> list){
+
+    public void helper(Node root, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> list) {
         list.add(root.data);
-        if(root.left==null && root.right==null){
+        if (root.left == null && root.right == null) {
             ans.add(new ArrayList<Integer>(list));
         }
-        if(root.left!=null) {
-            helper(root.left,ans,list);
+        if (root.left != null) {
+            helper(root.left, ans, list);
         }
-        if(root.right!=null){
-            helper(root.right,ans,list);
+        if (root.right != null) {
+            helper(root.right, ans, list);
         }
-        list.remove(list.size()-1);
+        list.remove(list.size() - 1);
     }
 
+    /* Should return minimum distance between a and b
+   in a tree with given root*/
+    static int findDist(Node root, int a, int b) {
+        // Your code here
+        Node commonParent = lca2(root, a, b);
+        ArrayList<Integer> arr1 = new ArrayList<Integer>();
+        getPaths(commonParent, a, arr1);
+        ArrayList<Integer> arr2 = new ArrayList<Integer>();
+        getPaths(commonParent, b, arr2);
+        return arr1.size() - 1 + arr2.size() - 1;
+    }
+
+    //Function to return the lowest common ancestor in a Binary Tree.
+    static Node lca2(Node root, int n1, int n2) {
+        if (root == null || root.data == n1 || root.data == n2) {
+            return root;
+        }
+
+        Node left = lca2(root.left, n1, n2);
+        Node right = lca2(root.right, n1, n2);
+
+        if (left == null) {
+            return right;
+        } else {
+            if (right == null) {
+                return left;
+            }
+        }
+        return root;
+    }
+    public static boolean getPaths(Node root, int n, ArrayList<Integer> arr) {
+        if (root == null) return false;
+        arr.add(root.data);
+        if (root.data == n) {
+            return true;
+        }
+        if (getPaths(root.left, n, arr) || getPaths(root.right, n, arr)) {
+            return true;
+        }
+        arr.remove(arr.size() - 1);
+        return false;
+
+    }
 }
