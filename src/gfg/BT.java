@@ -1,4 +1,4 @@
-package Arrays.gfg;
+package gfg;
 
 import java.util.*;
 
@@ -632,6 +632,7 @@ public class BT {
     public static boolean getPaths(Node root, int n, ArrayList<Integer> arr) {
         if (root == null) return false;
         arr.add(root.data);
+
         if (root.data == n) {
             return true;
         }
