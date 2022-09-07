@@ -44,6 +44,8 @@ public class ArraySum {
         System.out.println(slowBestSum(17, new int[]{2,3, 5,9,8,1,4,7}));
         System.out.println(slowBestSum(300, new int[]{7,14}));
 
+        String s = "ebvvjejv.f3nvjn.eeen";
+        String[] words = s.split("[.]");
 
     }
 
@@ -155,8 +157,6 @@ public class ArraySum {
                 }
             }
         }
-
-
         if(shortest != null){
             List<Integer> s = new ArrayList<>(shortest);
             memo.put(k,s);
