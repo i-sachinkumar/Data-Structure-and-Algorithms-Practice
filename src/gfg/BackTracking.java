@@ -124,5 +124,34 @@ public class BackTracking {
     }
 
 
+    //Function to return a list of indexes denoting the required
+    //combinations whose sum is equal to given number.
+    static ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        //Set<Integer> set = new HashSet<>(A);
+        //A = new ArrayList<Integer>(set);
+        Collections.sort(A);
+        backTrack(result, new ArrayList<Integer>(), A, B, 0);
+        return result;
+    }
+
+
+    private static void backTrack(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> inner, ArrayList<Integer> A,
+                                  int B, int start) {
+        if(B == 0) {
+            result.add(new ArrayList<Integer>(inner));
+            return;
+        }
+        if(B < 0) {
+            return;
+        }
+        for(int i=start; i<A.size(); i++) {
+            if(i>start && A.get(i) == A.get(i-1)) { continue; }
+            inner.add(A.get(i));
+            backTrack(result, inner, A, B-A.get(i), i);
+            inner.remove(inner.size()-1);
+        }
+    }
 
 }
