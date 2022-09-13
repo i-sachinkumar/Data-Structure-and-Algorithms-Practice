@@ -4,8 +4,22 @@ import java.util.*;
 
 public class BackTracking {
     public static void main(String[] args) {
-        int[] nums = {3,4};
-        int[] a = Arrays.copyOf(nums,nums.length);
+
+        int grid[][] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+                {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+
+        SolveSudoku(grid);
+        printGrid(grid);
+
+//        int[] nums = {3,4};
+//        int[] a = Arrays.copyOf(nums,nums.length);
     }
 
     //Rat in a Maze Problem - I
@@ -152,6 +166,123 @@ public class BackTracking {
             backTrack(result, inner, A, B-A.get(i), i);
             inner.remove(inner.size()-1);
         }
+    }
+
+
+    //nQueen
+    static ArrayList<ArrayList<Integer>> nQueen(int n) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> curr = new ArrayList<>();
+        nQueen(n, new boolean[n][n], 0, ans, curr);
+        //System.out.println(curr);
+        return ans;
+    }
+
+    static void nQueen(int n, boolean[][] chess, int i, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> curr) {
+        if(i == n){
+            ans.add(new ArrayList<>(curr));
+            return;
+        }
+
+
+        for(int j = 0 ; j < n ; j++){
+            if(isSafe(chess, i, j, n)){
+                curr.add(j+1);
+                chess[i][j] = true;
+                nQueen(n, chess, i+1, ans, curr);
+                chess[i][j] = false;
+                curr.remove(curr.size()-1);
+            }
+        }
+    }
+
+    private static boolean isSafe(boolean[][] board,int row,int col, int n){
+
+        for (int i=0;i<row;i++){
+            if(board[i][col]){
+                return false;
+            }
+        }
+
+        int maxiLeft=Math.min(row,col);
+        for(int j=1;j<=maxiLeft;j++){
+            if(board[row-1][col-1]){
+                return false;
+            }
+        }
+
+        int maxiRight=Math.min(row,board.length-col-1);
+        for(int j=1;j<=maxiRight;j++){
+            if(board[row-1][col+1]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    //Function to find a solved Sudoku.(done)
+    static boolean SolveSudoku(int[][] grid)
+    {
+        return SolveSudoku(grid, grid.length, 0);
+    }
+
+    //Function to print grids of the Sudoku.
+    static void printGrid (int[][] grid)
+    {
+        for(int[] r : grid){
+            for(int c: r){
+                System.out.print(c + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    static boolean SolveSudoku(int[][] grid, int n, int i)
+    {
+        if(i > 80) return true;
+        if(grid[i/9][i%9] != 0) return SolveSudoku(grid,n,i+1);
+
+        for(int e = 1; e <= 9; e++){
+            if(isSafe(grid, n, i/9, i%9, e)){
+                grid[i/9][i%9] = e;
+                if(SolveSudoku(grid, n, i+1)) return true;
+                grid[i/9][i%9] = 0;
+            }
+        }
+
+        return false;
+    }
+
+    static boolean isSafe(int[][] grid, int n, int i, int j, int e){
+        //row
+        for(int c = 0; c < n ; c++){
+            if(grid[i][c] == e) return false;
+        }
+
+        // col
+        for(int r = 0 ; r < n ;r++){
+            if(grid[r][j] == e) return false;
+        }
+
+        //grid
+        int r = 0;
+        int c = 0;
+
+        if(i >= 6) r = 6;
+        else if(i >= 3) r = 3;
+
+        if(j >= 6) c = 6;
+        else if(j >= 3) c = 3;
+
+        for(int p = 0; p < 3 ; p++){
+            for(int q = 0 ; q < 3 ; q++){
+                if(grid[r+p][c+q] == e) return false;
+            }
+        }
+
+        return true;
     }
 
 }
