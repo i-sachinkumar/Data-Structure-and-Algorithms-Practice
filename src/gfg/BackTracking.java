@@ -5,6 +5,16 @@ import java.util.*;
 public class BackTracking {
     public static void main(String[] args) {
 
+
+        System.out.println(removeInvalidParentheses("()((((()"));
+
+        List<String> dict = List.of("cats", "cat", "and", "sand", "dog");
+        String s = "catsanddog";
+
+
+        System.out.println(wordBreak(5, dict, s));
+
+
         int grid[][] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
                 {5, 2, 0, 0, 0, 0, 0, 0, 0},
                 {0, 8, 7, 0, 0, 0, 0, 3, 1},
@@ -14,6 +24,8 @@ public class BackTracking {
                 {1, 3, 0, 0, 0, 0, 2, 5, 0},
                 {0, 0, 0, 0, 0, 0, 0, 7, 4},
                 {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+
+        //String s = "dwefqwfq";
 
         SolveSudoku(grid);
         printGrid(grid);
@@ -283,6 +295,117 @@ public class BackTracking {
         }
 
         return true;
+    }
+
+    // Word Break - Part 2
+    static List<String> wordBreak(int n, List<String> dict, String s)
+    {
+        List<String> ans = new ArrayList<>();
+        wordBreak(n, dict, s, 0, "", "", ans);
+        return ans;
+    }
+    static void wordBreak(int n, List<String> dict, String s, int i, String word, String sentence, List<String> ans)
+    {
+        if(i >= s.length()){
+            ans.add(sentence.trim());
+            return;
+        }
+        for(int j = i ; j < s.length() ; j++){
+            word = word + s.charAt(j);
+            if(dict.contains(word)){
+                String tmp = sentence;
+                sentence = sentence + word + " ";
+                wordBreak(n, dict, s, j+1, "", sentence, ans);
+                sentence = tmp;
+            }
+        }
+    }
+
+
+
+    //Remove Invalid Parentheses
+    public static List<String> removeInvalidParentheses(String s) {
+        int n = s.length();
+        int i = 0;
+        int j = n-1;
+
+        max_len = -1;
+
+        String strt = "";
+        String end = "";
+        while(i < n){
+            char c = s.charAt(i);
+            if(c == ')');
+            else if(c == '(') break;
+            else strt = strt + c;
+            i++;
+        }
+
+        while(j >= 0){
+            char c = s.charAt(j);
+            if(c == '(');
+            else if(c == ')') break;
+            else end = c + end;
+            j--;
+        }
+
+        if(i<j) s = strt + s.substring(i, j+1) + end;
+        else{
+            String tmp = "";
+            for(int p = 0 ; p < n ; p++){
+                char c = s.charAt(p);
+                if(c != '(' && c != ')') tmp = tmp + c;
+            }
+            s = tmp;
+        }
+
+        List<String> ans = new ArrayList<>();
+
+        if(isBalanced(s)){
+            ans.add(s);
+            return ans;
+        }
+        Set<String> set = new HashSet<>();
+        removeInvalidParentheses(s, 0, set);
+        return new ArrayList<>(set);
+    }
+
+    static int max_len = -1;
+    public static void removeInvalidParentheses(String s, int i, Set<String> ans) {
+        if(s.length() < max_len) return;
+        if(isBalanced(s)){
+            if(s.length() == max_len)ans.add(s);
+            if(s.length() > max_len){
+                ans.clear();
+                max_len = s.length();
+                ans.add(s);
+            }
+        }
+        if(i >= s.length()) return;
+
+        String tmp = s;
+        String curr = "";
+        for(int j = 0 ; j < s.length(); j++){
+            if(j == i) continue;
+            curr = curr + s.charAt(j);
+        }
+        //System.out.println(curr);
+        if(s.charAt(i) == '(' || s.charAt(i) == ')') removeInvalidParentheses(curr, i, ans);
+
+        s = tmp;
+        removeInvalidParentheses(s, i+1, ans);
+    }
+
+    public static boolean isBalanced(String s){
+        Stack<Character> st = new Stack<>();
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(c != '(' && c != ')') continue;
+            if(c == '(') st.push('(');
+            else if(!st.empty() && st.peek() == '(') st.pop();
+            else return false;
+        }
+        return st.empty();
     }
 
 }
