@@ -5,7 +5,12 @@ import java.util.*;
 public class BackTracking {
     public static void main(String[] args) {
 
+        int[][] mines = {{1, 1, 1},
+                {1, 1, 1}};
+        System.out.println(findShortestPath(mines));
+        System.out.println(lastStoneWeightII(new int[]{31,26,33,21,40}));
 
+        System.out.println(equalPartition(3, new int[]{1,5,5}));
         System.out.println(removeInvalidParentheses("()((((()"));
 
         List<String> dict = List.of("cats", "cat", "and", "sand", "dog");
@@ -13,6 +18,7 @@ public class BackTracking {
 
 
         System.out.println(wordBreak(5, dict, s));
+
 
 
         int grid[][] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
@@ -24,7 +30,6 @@ public class BackTracking {
                 {1, 3, 0, 0, 0, 0, 2, 5, 0},
                 {0, 0, 0, 0, 0, 0, 0, 7, 4},
                 {0, 0, 5, 2, 0, 6, 3, 0, 0}};
-
         //String s = "dwefqwfq";
 
         SolveSudoku(grid);
@@ -51,6 +56,8 @@ public class BackTracking {
         if(i < 0 || i >= n || j < 0 || j >= n){
             return false;
         }
+
+
         if(m[i][j] == 0) return false;
         if(vis[i][j]) return false;
         if(n == 1 && m[0][0] == 1) return true;
@@ -406,6 +413,148 @@ public class BackTracking {
             else return false;
         }
         return st.empty();
+    }
+
+
+    // Find all possible palindromic partitions of a String
+    static ArrayList<ArrayList<String>> allPalindromicPerms(String S) {
+        ArrayList<ArrayList<String>> ans = new ArrayList<>();
+        allPalindromicPerms(S, 0, ans, new ArrayList<>());
+        return ans;
+    }
+    static void allPalindromicPerms(String s, int i, ArrayList<ArrayList<String>> ans, ArrayList<String> in) {
+        if(i >= s.length()){
+            ans.add(new ArrayList<>(in));
+        }
+
+        for(int j = i ; j < s.length(); j++){
+            if(isPalindrome(s, i, j)){
+                in.add(s.substring(i, j+1));
+                allPalindromicPerms(s, j+1, ans, in);
+                in.remove(in.size()-1);
+            }
+        }
+    }
+    static boolean isPalindrome(String s, int i, int j){
+        if(i >= j) return true;
+        if(s.charAt(i) != s.charAt(j)) return false;
+        else return isPalindrome(s, i+1, j-1);
+    }
+
+
+    static int equalPartition(int N, int[] arr)
+    {
+        int sum = 0;
+        for(int i : arr){
+            sum += i;
+        }
+
+        if(equalPartition(N, arr, 0, sum, 0)) return 1;
+        return 0;
+    }
+    static boolean equalPartition(int n, int[] arr, int i, int total, int curr){
+        if(2*curr == total) return true;
+        if(i >= n) return false;
+        return (equalPartition(n, arr, i+1, total, curr) ||
+                equalPartition(n, arr, i+1, total, curr+arr[i]));
+    }
+
+
+    public static int findShortestPath(int[][] mat) {
+        // code here
+        int n =  mat.length;
+        int m = mat[0].length;
+        int[][] nMat = new int[n][m];
+
+        for(int i = 0 ; i < n; i++){
+            for(int j = 0 ; j < m; j++){
+                nMat[i][j] = 1;
+            }
+        }
+
+        for(int i = 0 ; i < n; i++){
+            for(int j = 0 ; j < m; j++){
+                if(mat[i][j] == 0){
+                    nMat[i][j] = 0;
+                    if(i > 0) nMat[i-1][j] = 0;
+                    if(i < n-1) nMat[i+1][j] = 0;
+                    if(j > 0) nMat[i][j-1] = 0;
+                    if(j < m-1) nMat[i][j+1] = 0;
+                }
+            }
+        }
+//        for(int i = 0 ; i < n ; i++){
+            findShortestPath(nMat, 0, 0, n, m, new boolean[n][m], 0);
+//        }
+        if(minimum == Integer.MAX_VALUE) return -1;
+        return minimum+1;
+    }
+    static int minimum = Integer.MAX_VALUE;
+    public static void findShortestPath(int[][] nMat, int i, int j, int n, int m, boolean[][] vis, int path) {
+        if(i >= n || i < 0 || j >= m || j < 0) return;
+        if(vis[i][j]) return;
+        if(j == m-1){
+            if(path < minimum){
+                minimum = path;
+            }
+            return;
+        }
+        vis[i][j] = true;
+        findShortestPath(nMat, i-1, j, n, m, vis, path+1);
+        findShortestPath(nMat, i+1, j, n, m, vis, path+1);
+        findShortestPath(nMat, i, j-1, n, m, vis, path+1);
+        findShortestPath(nMat, i, j+1, n, m, vis, path+1);
+        if(j == 0) return;
+        if(nMat[i][j] == 0) return;
+        vis[i][j] = false;
+    }
+
+
+    public static int lastStoneWeightII(int[] stones) {
+        return dfs(0,0,stones);
+    }
+
+    public static int dfs(int index, int sum , int[] stones) {
+        String key = index+","+sum;
+        if(index== stones.length) {
+            return sum;
+        }
+        int currentValue = stones[index];
+        int left = dfs(index+1,sum+currentValue,stones);
+        int right = dfs(index+1,Math.abs(sum-currentValue),stones);
+        return Math.min(left,right);
+    }
+
+
+
+
+
+
+
+    int total = 0;
+    public int lastStoneWeightII2(int[] stones) {
+        for(int i : stones){
+            total += i;
+        }
+        lastStoneWeightII2(stones, 0, 0, new HashMap<>());
+        return min;
+    }
+    int min = Integer.MAX_VALUE;
+    public void lastStoneWeightII2(int[] stones, int i, int sum, Map<String, Integer> memo) {
+        String key = i + "," + sum;
+        if(i >= stones.length) {
+            return;
+        }
+        if(memo.containsKey(key)){
+            min = Math.min(min, memo.get(key));
+        }
+        if(Math.abs(total-sum - sum) < min){
+            memo.put(key, min);
+            min = Math.abs(total-sum - sum);
+        }
+        int curr = stones[i];
+        lastStoneWeightII2(stones, i+1, sum + curr, memo);
+        lastStoneWeightII2(stones, i+1, sum, memo);
     }
 
 }
