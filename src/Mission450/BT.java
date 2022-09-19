@@ -1,4 +1,4 @@
-package gfg;
+package Mission450;
 
 import java.util.*;
 
@@ -19,8 +19,8 @@ public class BT {
     public static void main(String[] args) {
         //inOP(inOrder(null, "4(2(3)(1))(6(5))"));
 
-        int inorder[] = {1, 6, 8, 7};
-        int preorder[] = {1, 6, 7, 8};
+        int[] inorder = {1, 6, 8, 7};
+        int[] preorder = {1, 6, 7, 8};
 
         buildTree(inorder, preorder, 4);
     }
