@@ -5,6 +5,8 @@ import java.util.*;
 public class BackTracking {
     public static void main(String[] args) {
 
+//        char[] c = {'c', 'a'};
+//        System.out.println(new String(c));
         int[][] mines = {{1, 1, 1},
                 {1, 1, 1}};
         System.out.println(findShortestPath(mines));
@@ -52,15 +54,12 @@ public class BackTracking {
     }
     public static boolean findPath(int[][] m, int n, int i, int j, ArrayList<String> arr, boolean[][] vis, String curr) {
         // Your code here
-        if(n == 0) return false;
         if(i < 0 || i >= n || j < 0 || j >= n){
             return false;
         }
 
-
         if(m[i][j] == 0) return false;
         if(vis[i][j]) return false;
-        if(n == 1 && m[0][0] == 1) return true;
         if(i == n-1 && j==n-1){
             arr.add(curr);
             return true;
@@ -305,14 +304,12 @@ public class BackTracking {
     }
 
     // Word Break - Part 2
-    static List<String> wordBreak(int n, List<String> dict, String s)
-    {
+    static List<String> wordBreak(int n, List<String> dict, String s){
         List<String> ans = new ArrayList<>();
         wordBreak(n, dict, s, 0, "", "", ans);
         return ans;
     }
-    static void wordBreak(int n, List<String> dict, String s, int i, String word, String sentence, List<String> ans)
-    {
+    static void wordBreak(int n, List<String> dict, String s, int i, String word, String sentence, List<String> ans) {
         if(i >= s.length()){
             ans.add(sentence.trim());
             return;
@@ -391,13 +388,13 @@ public class BackTracking {
         if(i >= s.length()) return;
 
         String tmp = s;
-        String curr = "";
+        StringBuilder curr = new StringBuilder();
         for(int j = 0 ; j < s.length(); j++){
             if(j == i) continue;
-            curr = curr + s.charAt(j);
+            curr.append(s.charAt(j));
         }
         //System.out.println(curr);
-        if(s.charAt(i) == '(' || s.charAt(i) == ')') removeInvalidParentheses(curr, i, ans);
+        if(s.charAt(i) == '(' || s.charAt(i) == ')') removeInvalidParentheses(curr.toString(), i, ans);
 
         s = tmp;
         removeInvalidParentheses(s, i+1, ans);
@@ -556,5 +553,107 @@ public class BackTracking {
         lastStoneWeightII2(stones, i+1, sum + curr, memo);
         lastStoneWeightII2(stones, i+1, sum, memo);
     }
+
+    //Permutations of a given string
+    public void find_permutation(String S, int i, ArrayList<String> ans) {
+        if(i >= S.length()){
+            ans.add(S);
+            return;
+        }
+        for(int j = i ; j < S.length(); j++){
+            S = swap(S, i, j);
+            find_permutation(S, i+1, ans);
+            S = swap(S, i, j);
+        }
+    }
+    static String swap(String s, int i, int j){
+        char[] c = s.toCharArray();
+        char temp = c[i];
+        c[i] = c[j];
+        c[j] = temp;
+        return String.valueOf(c);
+    }
+
+    //Function to find the largest number after k swaps.
+    public static String findMaximumNum(String str, int k){
+        //code here
+        findMaximumNum(str, 0, k);
+        return s;
+    }
+    static String s = "";
+    public static void findMaximumNum(String str, int i, int k){
+        //code here.
+        if(i >= k){
+            if(s.compareTo(str) > 0) s = str;
+            return;
+        }
+        for (int j = i ; j < str.length(); j++){
+            swap(str, i, j);
+            findMaximumNum(str, i+1, k);
+            swap(str, i, j);
+        }
+    }
+
+
+    public boolean isKPartitionPossible(int a[], int n, int k) {
+        // Your code he
+        int sum = 0;
+        for(int i : a){
+            sum += i;
+        }
+        if(sum%k != 0) return false;
+        boolean[] vis = new boolean[n];
+        for(int i = 0 ; i < k ; k++){
+            if(!helper(n, a, sum/k, 0, vis)) return false;
+        }
+        return true;
+    }
+    public boolean helper(int n, int[] arr, int target, int i, boolean[] vis) {
+        if(target == 0){
+            return true;
+        }
+        if(target < 0 || i >= n){
+            return false;
+        }
+        if(!vis[i]){
+            if(helper(n, arr, target-arr[i], i+1, vis)){
+                vis[i] = true;
+                return true;
+            }
+        }
+        return helper(n, arr, target, i+1, vis);
+    }
+
+
+    public int find(int n){
+        return (int) helper(n);
+    }
+    public long helper(int n){
+        // Code your solution here.
+        int [] dp=new int[n+1];
+        dp[0]=0;dp[1]=1;
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        for(int i=2;i<=n;i++){
+            if(i%5==0){
+                dp[i]=11;
+                break;
+            }else{
+                dp[i]=(dp[i-1]+dp[i-2])%100000007;
+            }
+        }
+        return dp[n];
+    }
+    public long find(int n, Map<Integer, Long> memo){
+        if(n == 0) return 0;
+        if(n%5 == 0) return 11;
+        if(n == 1) return 1;
+        if(memo.containsKey(n)) return memo.get(n);
+
+        long res = (find(n-1, memo) + find(n-2, memo))%1000000007;
+        memo.put(n, res);
+        return res;
+    }
+
 
 }

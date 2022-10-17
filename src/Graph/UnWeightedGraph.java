@@ -9,6 +9,7 @@ public class UnWeightedGraph {
 
     UnWeightedGraph(int v) {
         graph = new ArrayList<>(v);
+        Collections.fill(graph, new ArrayList<>());
         for (int i = 0; i < v; i++) {
             graph.add(new ArrayList<>());
         }

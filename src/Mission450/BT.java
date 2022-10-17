@@ -5,10 +5,10 @@ import java.util.*;
 
 public class BT {
 
+
     static class Node {
         int data;
         Node left, right;
-
         // Function to create a new binary tree node having a given key
         public Node(int key) {
             data = key;
@@ -19,10 +19,54 @@ public class BT {
     public static void main(String[] args) {
         //inOP(inOrder(null, "4(2(3)(1))(6(5))"));
 
+        String st = "dche";
+        char[] c = st.toCharArray();
+        String s = String.valueOf(c);
+        System.out.println(rev(s));
         int[] inorder = {1, 6, 8, 7};
         int[] preorder = {1, 6, 7, 8};
 
         buildTree(inorder, preorder, 4);
+    }
+
+    static class tuple{
+        int a,b,c;
+        public tuple(int a,int b,int c)
+        {
+            this.a=a;
+            this.b=b;
+            this.c=c;
+        }
+    }
+    static int maxScore(tuple[] arr){
+        Arrays.sort(arr, new Comparator<tuple>() {
+            @Override
+            public int compare(tuple o1, tuple o2) {
+                if(o1.b == o2.b){
+                    return o1.c - o2.c;
+                }
+                return o1.b - o2.b;
+            }
+        });
+        int count = 1;
+        tuple last = arr[0];
+        for(int i = 1 ; i < arr.length ; i++){
+            if(arr[i].b >= last.b){
+                count++;
+                last = arr[i];
+            }
+        }
+        return count;
+    }
+
+    static String rev(String s){
+        char[] c = s.toCharArray();
+        for(int i = 0, j = c.length-1; i < j ; i++,j--){
+            char temp = c[i];
+            c[i] = c[j];
+            c[j] = temp;
+        }
+        return String.valueOf(c);
     }
 
     public static void inorderIterative(Node root) {
@@ -76,7 +120,6 @@ public class BT {
         leftView(root.right, map, l + 1);
     }
 
-
     ArrayList<Integer> leftView_opt(Node root) {
         ArrayList<Integer> rs = new ArrayList<>();
         leftView2(root, rs, 0);
@@ -113,7 +156,6 @@ public class BT {
         if (root == null) {
             return ans;
         }
-
         Map<Integer, Integer> map = new TreeMap<>();
         Queue<pair> q = new LinkedList<pair>();
         q.add(new pair(root, 0));
@@ -123,7 +165,6 @@ public class BT {
 
             int hd = it.hd;
             Node temp = it.node;
-
             map.computeIfAbsent(hd, k -> temp.data);
             if (temp.left != null) {
                 q.add(new pair(temp.left, hd - 1));
@@ -144,16 +185,12 @@ public class BT {
     //from left to right in Binary Tree.
     static ArrayList<Integer> bottomView(Node root) {
         ArrayList<Integer> ans = new ArrayList<Integer>();
-
-
         if (root == null) {
-
             return ans;
-
         }
 
         Map<Integer, Integer> map = new TreeMap<>();
-        Queue<pair> q = new LinkedList<pair>();
+        Queue<pair> q = new LinkedList<>();
         q.add(new pair(root, 0));
         while (!q.isEmpty()) {
 
@@ -405,6 +442,9 @@ public class BT {
         if (left != null && leftPre != null) root.left = buildTree(left, leftPre, left.length);
         if (right != null && rightPre != null) root.right = buildTree(right, rightPre, right.length);
 
+        //
+
+
         return root;
     }
 
@@ -643,4 +683,62 @@ public class BT {
         return false;
 
     }
+
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/replace-every-element-with-the-least-greater-element-on-its-right/1
+    public static ArrayList<Integer> findLeastGreater(int n, int[] arr) {
+        int[][] nArr = new int[n][2];
+        for(int i = 0 ; i < n ; i++){
+            nArr[i][0] = arr[i];
+            nArr[i][1] = i;
+        }
+        Arrays.sort(nArr, Comparator.comparingInt(o -> o[0]));
+        for(int i = 0 ; i < n ; i++){
+            int[] e = nArr[i];
+            int el = e[0];
+            int ind = e[1];
+            for(int j = i+1; j <= n ; j++){
+                if(j == n){
+                    arr[ind] = -1;
+                    break;
+                }
+                if(nArr[j][1] > ind && el != nArr[j][0]){
+                    arr[ind] = nArr[j][0];
+                    break;
+                }
+            }
+        }
+        ArrayList<Integer> ans = new ArrayList<>();
+        for(int i : arr){
+            ans.add(i);
+        }
+        return ans;
+    }
+    //Binary Search Tree Approach Optimized
+    public static ArrayList<Integer> findLeastGreaterOpt(int n, int[] arr) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Node root = null;
+        for(int i = n-1 ; i >= 0 ; i--){
+            succ = null;
+            root = addInBST(root, arr[i]);
+            if(succ != null) ans.add(succ.data);
+            else ans.add(-1);
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+    static Node succ = null;
+    static Node addInBST(Node root, int el){
+        if(root == null) return new Node(el);
+        if(el >= root.data){
+            root.right = addInBST(root.right, el);
+        }
+        else{
+            succ = root;
+            root.left = addInBST(root.left, el);
+        }
+        return root;
+    }
+
 }
