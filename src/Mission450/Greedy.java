@@ -50,7 +50,6 @@ public class Greedy {
         int n = nums.length;
         return Math.max(nums[0] * nums[1] * nums[n - 1], nums[n - 1] * nums[n - 2] * nums[n - 3]);
     }
-
     public int maximumProductFast(int[] nums) {
         int max1 = Integer.MIN_VALUE, max2 = Integer.MIN_VALUE, max3 = Integer.MIN_VALUE, min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
         for (int n : nums) {
@@ -200,10 +199,10 @@ public class Greedy {
                 return 0;
             }
         });
-        for (int i = 0; i < n; i++) {
+        for (ArrayList<Integer> integers : A) {
             ArrayList<Integer> in = new ArrayList<>();
-            int st = A.get(i).get(0);
-            int end = A.get(i).get(1);
+            int st = integers.get(0);
+            int end = integers.get(1);
             in.add(st);
             in.add(+1);
             a.add(in);
@@ -931,6 +930,48 @@ public class Greedy {
         }
         return ans;
     }
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/page-faults-in-lru5603/1
+    static int pageFaults(int N, int C, int[] pages){
+        int faulty = 0;
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0 ;i < N ; i++){
+            if(q.contains(pages[i])){
+                q.remove(pages[i]);
+                q.offer(pages[i]);
+                continue;
+            }
+            if(q.size()==C) q.poll();
+            q.offer(pages[i]);
+            faulty++;
+        }
+        return faulty;
+    }
+    static int pageFaults2(int N, int C, int[] pages){
+        // code here
+        int faults=0;
+        HashMap<Integer,Integer> map =new HashMap<>();
+        for(int i=0; i<N; i++) {
+            if (!map.containsKey(pages[i])) {
+                if (map.size() >= C) {
+                    int min = N + 1;
+                    int key = pages[i];
+                    for (Map.Entry<Integer, Integer> v : map.entrySet()) {
+                        if (v.getValue() < min) {
+                            min = v.getValue();
+                            key = v.getKey();
+                        }
+                    }
+                    map.remove(key);
+                }
+                faults++;
+            }
+            map.put(pages[i],i);
+        }
+        return faults;
+    }
+
 
 
 
