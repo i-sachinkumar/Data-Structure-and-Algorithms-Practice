@@ -803,6 +803,173 @@ public class Greedy {
     }
 
 
+    //Check if it is possible to survive on Island
+    //Qs: https://practice.geeksforgeeks.org/problems/check-if-it-is-possible-to-survive-on-island4922/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+    static int minimumDays(int S, int N, int M){
+        // code here
+        // int week_to_survive = S/7;
+        // int max_buy_week = 6*N;
+        // int food_each_week = M*7
+        int a = S*M;
+        int b = (S-(S/7))*N;
+        if(b>=a){
+            if((S*M)%N==0)
+            {return (S*M)/N;}
+            else{
+                return ((S*M)/N)+1;
+            }
+        }
+        else return -1;
+    }
+
+
+
+    //QS: https://practice.geeksforgeeks.org/problems/maximum-product-subset-of-an-array/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+    public static int findMaxProduct(int n, int[] arr) {
+        Arrays.sort(arr);
+        long ans = 1;
+        int i = n-1;
+        while(i >= 0 && arr[i] > 0){
+            ans = (ans*arr[i])%1000000007;
+            i--;
+        }
+        i = 0;
+        while(i < n-1 && arr[i] < 0 && arr[i+1]<0){
+            ans = (ans*arr[i])%1000000007;
+            ans = (ans*arr[i+1])%1000000007;
+            i = i+2;
+        }
+        if(arr[n-1] <= 0 && i == 0){
+            return arr[n-1];
+        }
+        return (int)ans;
+    }
+
+
+    // Maximize sum after K negations
+    //Qs: https://practice.geeksforgeeks.org/problems/maximize-sum-after-k-negations1149/1
+    public static long maximizeSum(long a[], int n, int k){
+        long sum = 0;
+        int neg_count = 0;
+        for(long i : a){
+            sum += i;
+            if(i <= 0) neg_count++;
+        }
+        if(k == 0) return sum;
+        Arrays.sort(a);
+        int i = 0;
+        while(k > 0 && i < neg_count){
+            sum += (-2*a[i]);
+            k--;
+            i++;
+        }
+        if(k % 2 == 0) return sum;
+        if(i > 0) sum += (2*a[i-1]);
+        else if(neg_count == 0) sum -= (2*a[0]);
+        return sum;
+    }
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/maximize-arrii-of-an-array0026/1
+    int Maximize(int[] arr, int n){
+         Arrays.sort(arr);
+         //, Comparator.comparable(o -> -o)
+         long sum = 0;
+
+         int i = 0;
+         for(int e : arr){
+             sum = ((sum + ((long) i *e))%1000000007);
+             i++;
+         }
+         return (int)(sum%1000000007);
+    }
+
+
+    //Maximum sum of absolute difference of any permutation
+    //Qs: https://www.geeksforgeeks.org/maximum-sum-absolute-difference-array/
+    int maxDiffSum(int[] arr){
+        Arrays.sort(arr);
+        int sum = 0;
+        int i = 0;
+        int j = arr.length-1;
+        while (i < j){
+            sum += (2*Math.abs(arr[i]- arr[j]));
+            i++;
+            j--;
+        }
+        return sum;
+    }
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/swap-and-maximize5859/1
+    long maxSum(long[] arr, int n){
+        long ans = 0;
+        Arrays.sort(arr);
+        int i = 0;
+        int j = n-1;
+        while(i < j){
+            if(j - i <= 1) break;
+            ans += (Math.abs(arr[i] - arr[j]) + (Math.abs(arr[i+1] - arr[j])));
+            i++;
+            j--;
+        }
+        if(i == j) ans += (Math.abs(arr[j] - arr[0]));
+        else if(i+1 == j) ans += (Math.abs(arr[j] - arr[j-1]) + Math.abs(arr[j] - arr[0]));
+        return ans;
+    }
+
+
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/minimum-sum-of-absolute-differences-of-pairs/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+    long findMinSum(int[] A,int[] B,int N) {
+        Arrays.sort(A);
+        Arrays.sort(B);
+        long ans = 0;
+        for(int i = 0 ; i < N; i++){
+            ans += (Math.abs(A[i]-B[i]));
+        }
+        return ans;
+    }
+
+
+
+    /**
+     * Seema has got two strings X and Y.
+     * Since she likes palindromes,
+     * she would like to pick x as some non-empty palindromic substring of X
+     * and y as some non-empty palindromic substring of Y.
+     * Concatenating them, she would have string xy.
+     * Seema feels getting strings this way is interesting,
+     * so she wants to evaluate how many unique numbers of strings she can get.
+     *
+     *
+     * Input
+     * 1 line has a single string x (1s|X|≤2-105).
+     * 2nd line has a single string Y (1s|Y|≤2-105).
+     * Strings X and Y contain lowercase English letters only (no capital letters).
+     *
+     * Output
+     * The first and only line should contain a single integer - the number of possible strings.
+     *
+     * Example 1
+     * input
+     * X = xx
+     * Y = xyx
+     * Output
+     * 6
+     * Explanation Strings-xx, xy, xxyx, xxx, xxy, xxxyx
+     *
+     * Example 2
+     * input
+     * xxyx
+     * xyxx
+     * output 15
+     *
+     * Note: Do not repeat strings, as xx+x = xxx and also x+xx = xxx, but xxx will be counted only once.
+     */
+
+
 
 
 
