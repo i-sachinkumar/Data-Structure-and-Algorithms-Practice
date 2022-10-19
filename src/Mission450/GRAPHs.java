@@ -674,4 +674,35 @@ public class GRAPHs {
         dfsVis[i] = false;
         return false;
     }
+
+
+
+
+    //Hamiltonian Path
+    //Qs: https://practice.geeksforgeeks.org/problems/hamiltonian-path2522/1
+    boolean check(int n, int m, ArrayList<ArrayList<Integer>> Edges){
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0 ; i < n; i++){
+            adj.add(new ArrayList<>());
+        }
+        for(ArrayList<Integer> edge: Edges){
+            adj.get(edge.get(0)-1).add(edge.get(1)-1);
+            adj.get(edge.get(1)-1).add(edge.get(0)-1);
+        }
+        for(int i = 0 ; i < n ; i++){
+            if(helper(n, adj, i, 0, new boolean[n], 0)) return true;
+        }
+        return false;
+    }
+    boolean helper(int n, ArrayList<ArrayList<Integer>> adj, int i, int st, boolean[] vis, int count){
+        if(count == n) return true;
+        if(vis[i]) return false;
+        vis[i] = true;
+        ArrayList<Integer> neighbors = adj.get(i);
+        for(int neighbor : neighbors){
+            if(helper(n, adj, neighbor, st, vis, count+1)) return true;
+        }
+        vis[i] = false;
+        return false;
+    }
 }

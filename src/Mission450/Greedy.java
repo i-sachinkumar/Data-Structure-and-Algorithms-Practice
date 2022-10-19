@@ -986,6 +986,86 @@ public class Greedy {
 
 
 
+    //Function to return the minimum cost of connecting the ropes.
+    //Qs: https://practice.geeksforgeeks.org/problems/minimum-cost-of-ropes-1587115620/1
+    long minCost(long[] arr, int n) {
+        Queue<Long> pq = new PriorityQueue<>();
+        for(int i = 0 ; i < n ; i++){
+            pq.add(arr[i]);
+        }
+        long ans = 0;
+        while(pq.size() > 1){
+            long first = pq.poll();
+            long sec = pq.poll();
+            ans += (first + sec);
+            pq.offer(first + sec);
+        }
+        return ans;
+    }
+
+
+
+    //Qs: https://practice.geeksforgeeks.org/problems/smallest-number5829/1
+    // smallest num with D digits and digit_sum == S
+    static String smallestNumber(int S, int D){
+        char[] num = new char[D];
+        Arrays.fill(num, '0');
+        num[0] = '1';
+        S--;
+        for(int i = D-1 ; i > 0 ; i--){
+            if(S >= 9){
+                num[i] = '9';
+                S -= 9;
+            }
+            else{
+                num[i] = (char)('0' + S);
+                S = 0;
+                return String.valueOf(num);
+            }
+        }
+        if(S == 0) return String.valueOf(num);
+        if(S <= 8){
+            num[0] = (char)('0' + S + 1);
+            return String.valueOf(num);
+        }
+        return "-1";
+    }
+
+
+
+    //Find Maximum Equal sum of Three Stacks
+    //Qs: https://practice.geeksforgeeks.org/problems/find-maximum-equal-sum-of-three-stacks/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+    public static int maxEqualSum(int N1,int N2,int N3, int[] S1, int[] S2, int[] S3) {
+        int sum1 = 0;
+        int sum2 = 0;
+        int sum3 = 0;
+        for(int i : S1) sum1 += i;
+        for(int i : S2) sum2 += i;
+        for(int i : S3) sum3 += i;
+        int i = 0, j = 0, k = 0;
+        while(!(sum1 == sum2 && sum2 == sum3)){
+            int max = Math.max(sum1, Math.max(sum2, sum3));
+            if(sum1 == max){
+                sum1 -= S1[i];
+                i++;
+            }
+            else if(sum2 == max){
+                sum2 -= S2[j];
+                j++;
+            }
+            else{
+                sum3 -= S3[k];
+                k++;
+            }
+        }
+        return sum1;
+    }
+
+
+
+
+
+
 
 
     /**
