@@ -6,7 +6,7 @@ public class ThreadDemo implements Runnable{
 
     ThreadDemo(String tName){
         threadName = tName;
-        System.out.print(threadName);
+        System.out.println(threadName);
     }
     @Override
     public void run() {

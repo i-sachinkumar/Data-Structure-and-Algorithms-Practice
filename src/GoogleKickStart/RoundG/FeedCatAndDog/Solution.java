@@ -69,21 +69,15 @@ public class Solution {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         int testCases = sc.nextInt();
-
         for(int i = 1 ; i <= testCases ; i++){
-
             int N = sc.nextInt();
             int D = sc.nextInt();
             int C = sc.nextInt();
             int M = sc.nextInt();
-
             sc.nextLine();
             String S = sc.nextLine();
-
             boolean ans = true;  //true if Yes; false is No
-
             //solution for ith testcase
             for(int j = 0 ; j <  N ; j++){
                 if(D == 0 ){
@@ -98,18 +92,15 @@ public class Solution {
                     // a dog is at (j+1)th position
                     D--;
                     C += M;
-
                     //after feeding current dog if dog food ends
                     if(D <= 0){
                         ans = areAllDogsFed(S,j+1,N);
                         break;
                     }
                 }
-
                 else if(S.charAt(j) == 'C'){
                     // a cat is at (j+1)th position
                     C--;
-
                     //after feeding current dog if dog food ends
                     if(C == 0){
                         if(S.charAt(j+1) == 'C'){
@@ -117,7 +108,6 @@ public class Solution {
                             break;
                         }
                     }
-
                     else if(C < 0){
                         ans = areAllDogsFed(S,j+1, N);
                         break;

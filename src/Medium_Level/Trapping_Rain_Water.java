@@ -5,7 +5,6 @@ package Medium_Level;
  *
  * Link GFG :
  * (https://practice.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1#)
- *
  * Statement:
  * Given an array arr[] of N non-negative integers representing the height of blocks.
  * If width of each block is 1, compute how much water can be
@@ -87,5 +86,40 @@ public class Trapping_Rain_Water {
             }
         }
         return water_trapped;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    static long trappingWater2(int[] arr, int n) {
+        int[] before_max = new int[n];
+        int[] after_max = new int[n];
+        for(int i = 1 ;i < n ; i++) before_max[i] = Math.max(before_max[i-1], arr[i-1]);
+        for(int i = n-2 ;i >= 0 ; i--) after_max[i] = Math.max(after_max[i+1], arr[i+1]);
+
+        long ans = 0;
+        for (int i = 0; i < n ; i++){
+            int min = Math.min(before_max[i], after_max[i]);
+            if(min > arr[i]){
+                ans += (min - arr[i]);
+            }
+        }
+
+        return ans;
     }
 }

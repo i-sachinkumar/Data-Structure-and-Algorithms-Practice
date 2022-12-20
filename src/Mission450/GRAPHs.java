@@ -1,6 +1,6 @@
 package Mission450;
 
-
+import java.util.Arrays;
 import java.util.*;
 
 /**
@@ -93,6 +93,25 @@ public class GRAPHs {
 
     public static void main(String[] args) {
 
+        int[] parents = {0,1,2,3,4,5,6};
+        int[] rank = new int[parents.length];
+        unionByRank(parents, rank, 1,4);
+        unionByRank(parents, rank, 6,1);
+        unionByRank(parents, rank, 5, 3);
+        unionByRank(parents, rank, 0, 5);
+        System.out.println(findPathComp(parents, 0));
+        System.out.println(findPathComp(parents, 3));
+        System.out.println(findPathComp(parents, 5));
+
+
+        Scanner sc1 = new Scanner(System.in);
+        int N = sc1.nextInt();
+        int K = sc1.nextInt();
+        String dict[] = new String[N];
+        for (int i = 0 ; i < N; i++){
+            dict[i] = sc1.next();
+        }
+        System.out.println(findOrder(dict, N, K));
 
         System.out.println(ladderLength("hit", "cog", new ArrayList<>(List.of("hot","dot","dog","lot","log")))) ;
 
@@ -705,4 +724,109 @@ public class GRAPHs {
         vis[i] = false;
         return false;
     }
+
+
+
+
+    // Function to find the number of islands.
+    // Qs: https://practice.geeksforgeeks.org/problems/find-the-number-of-islands/1
+    public int numIslands(char[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] vis = new boolean[n][m];
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0 ; j < m ; j++){
+                if(!vis[i][j] && grid[i][j] == '1'){
+                    numIslands(n, m, grid, i, j, vis);
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+    public void numIslands(int n, int m, char[][] grid, int i , int j, boolean[][] vis) {
+        if(i<0 || i >=n || j<0 || j>=m) return;
+        if(grid[i][j] == '0') return;
+        if(vis[i][j]) return;
+        vis[i][j] = true;
+        int[][] moves = {{-1,-1}, {-1,1}, {1, -1}, {1, 1}, {0,1}, {0,-1}, {-1,0}, {1, 0}};
+        for(int[] move : moves){
+            numIslands(n, m, grid, i+move[0], j + move[1], vis);
+        }
+    }
+
+
+
+    public static String findOrder(String [] dict, int N, int K){
+        ArrayList<HashSet<Integer>> adj = new ArrayList<>();
+        for(int i = 0 ; i < K; i++){
+            adj.add(new HashSet<>());
+        }
+        for(int i = 0 ; i < dict.length-1; i++) {
+            char[] curr = dict[i].toCharArray();
+            char[] next = dict[i + 1].toCharArray();
+            for (int j = 0; j < Math.min(curr.length, next.length); j++) {
+                if (curr[j] == next[j]) continue;
+                adj.get(curr[j] - 'a').add(next[j] - 'a');
+                break;
+            }
+        }
+        boolean[] vis = new boolean[K];
+        Stack<Integer> st = new Stack<>();
+        for(int i = 0; i < K; i++){
+            helper(adj, st, i, vis);
+        }
+        String ans = "";
+        while (!st.empty()) ans = ans + (char)('a' + st.pop());
+        return ans;
+    }
+    // using topological sort
+    public static void helper(ArrayList<HashSet<Integer>> adj, Stack<Integer> st, int i, boolean[] vis){
+        if(vis[i]) return;
+        vis[i] = true;
+        HashSet<Integer> neighbors = adj.get(i);
+        for(int neighbor : neighbors) {
+            helper(adj, st, neighbor, vis);
+        }
+        st.push(i);
+    }
+
+
+    /**
+     * Union find & Disjoint set
+     */
+    public static int find(int[] parents, int x){
+        if(parents[x] == x) return x;
+        return find(parents, parents[x]);
+    }
+    public static int findPathComp(int[] parents, int x){
+        if(parents[x] == x) return x;
+        return parents[x] = findPathComp(parents, parents[x]);
+    }
+    public static void union(int[] parents, int x, int y){
+        int xPar = find(parents, x);
+        int yPar = find(parents, y);
+
+        if(xPar == yPar) return;
+        parents[xPar] = yPar;
+    }
+    public static void unionByRank(int[] parents, int[] rank, int x, int y){
+        int xPar = find(parents, x);
+        int yPar = find(parents, y);
+
+        if(xPar == yPar) return;
+
+        if(rank[xPar] == rank[yPar]){
+            parents[xPar] = yPar;
+            rank[yPar]++;
+            return;
+        }
+        if(rank[xPar] < rank[yPar]){
+            parents[xPar] = yPar;
+            return;
+        }
+        parents[yPar] = xPar;
+    }
+
 }

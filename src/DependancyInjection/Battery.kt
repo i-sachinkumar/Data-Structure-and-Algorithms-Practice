@@ -1,0 +1,4 @@
+package DependancyInjection
+
+class Battery {
+}

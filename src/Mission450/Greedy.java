@@ -229,9 +229,9 @@ public class Greedy {
     public int solve(int[][] A) {
         int n = A.length;
         ArrayList<ArrayList<Integer>> l = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            int s = A[i][0];
-            int e = A[i][1];
+        for (int[] ints : A) {
+            int s = ints[0];
+            int e = ints[1];
             ArrayList<Integer> temp1 = new ArrayList<>();
             temp1.add(s);
             temp1.add(1);

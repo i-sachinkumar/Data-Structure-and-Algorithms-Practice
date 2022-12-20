@@ -1,0 +1,3 @@
+package DependancyInjection
+
+class MemoryCard 

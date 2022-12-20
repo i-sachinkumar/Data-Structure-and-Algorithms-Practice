@@ -1,13 +1,16 @@
 package Mission450;
 
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType;
+
 import java.math.BigInteger;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Arrays;
+import java.util.*;
 
 public class DP{
     public static void main(String[] args) {
+
+        System.out.println(getSumOpt(1,1,1));
+        System.out.println(getSum(1, 1, 1));
 
         System.out.println(FindMaxSum(new int[]{34, 343, 12, 5543, 233, 444, 543, 236}, 8));
 
@@ -22,7 +25,7 @@ public class DP{
     public static long count(int[] coins, int N, int sum) {
         long[][] dp = new long[sum+2][N+2];
         for(int i = 0 ; i <= sum; i++){
-            Arrays.fill(dp[i], -1);
+            java.util.Arrays.fill(dp[i], -1);
         }
         return count(coins, N, sum, 0, dp);
     }
@@ -488,6 +491,121 @@ public class DP{
             return dp[n][last] = Math.max(op1, op2);
         }
         return dp[n][last] = maxChainLength(arr, n-1, last, dp);
+    }
+
+
+
+    public static int getSum(int X, int Y, int Z) {
+        for(int i = 1 ; i <= 4; i++){
+            ArrayList<ArrayList<Integer>> ans =  new ArrayList<>();
+            System.out.print(getSum(2, Y, Z, 3, ans, new ArrayList<>()) + " -> ");
+            System.out.println(ans);
+        }
+        return 0;
+    }
+    public static long getSum(int X, int Y, int Z, int n, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> in){
+        if(n > X+Y+Z){
+            ans.add(new ArrayList<>(in));
+            return 0;
+        }
+        long sum = 0;
+        if(X > 0){
+            in.add(4);
+            long t1 = getSum(X-1, Y, Z, n, ans, in);
+            //System.out.print("t1:" + t1+",");
+            sum += (t1*10 + 4);
+            //System.out.println(sum);
+            in.remove(in.size()-1);
+        }
+        if(Y > 0){
+            in.add(5);
+            sum += (getSum(X, Y-1, Z, n, ans, in)*10 + 5);
+            in.remove(in.size()-1);
+        }
+        if(Z > 0){
+            in.add(6);
+            sum += (getSum(X, Y, Z-1, n, ans, in)*10 + 6);
+            in.remove(in.size()-1);
+        }
+
+        return sum;
+    }
+    //robust to submit
+    public static int getSumOpt(int X, int Y, int Z) {
+        long[][][] dp = new long[X+1][Y+1][Z+1];
+        long[][][] num = new long[X+1][Y+1][Z+1]; // don't forget to take mod of it
+        num[0][0][0] = 1L;
+        long mod = 1000000007;
+        long ans = 0L;
+        for(int i = 0 ; i <= X; i++){
+            for(int j = 0 ; j <= Y; j++) {
+                for (int k = 0; k <= Z; k++) {
+                    if(i > 0){
+                        dp[i][j][k] += (10L*dp[i-1][j][k] + num[i-1][j][k]*4L)%mod;
+                        num[i][j][k] += num[i-1][j][k]%mod;
+                    }
+                    if(j > 0){
+                        dp[i][j][k] += (10L*dp[i][j-1][k] + num[i][j-1][k]*5L)%mod;
+                        num[i][j][k] += num[i][j-1][k]%mod;
+                    }
+                    if(k > 0){
+                        dp[i][j][k] += (10L*dp[i][j][k-1] + num[i][j][k-1]*6L)%mod;
+                        num[i][j][k] += num[i][j][k-1]%mod;
+                    }
+                    ans += dp[i][j][k]%mod;
+                    ans = ans%mod;
+                }
+            }
+        }
+        ans = ans%mod;
+        return (int) ans;
+    }
+
+
+
+
+    public int[] reverseSpiral(int R, int C, int[][] a)
+    {
+        int sr = 0;
+        int sc = 0;
+        int er = R-1;
+        int ec = C-1;
+        int[] ans = new int[R*C];
+        int i = 0;
+
+        while (i < ans.length){
+            //left to right;
+            for(int j = sc ; j <= ec; j++){
+                ans[i] = a[sr][j];
+                i++;
+            }
+            sr++;
+            //top to bottom
+            for(int j = sr; j <= er; j++){
+                ans[i] = a[j][ec];
+                i++;
+            }
+            ec--;
+            //right to left;
+            for(int j = ec; j>= sc; j--){
+                ans[i] = a[er][j];
+                i++;
+            }
+            er--;
+            // bottom to top
+            for(int j = er; j >= sr; j--){
+                ans[i] = a[j][sc];
+                i++;
+            }
+            sc++;
+        }
+
+        for(int l = 0, r = ans.length-1; l < r; l++,r--){
+            int temp = ans[l];
+            ans[l] = ans[r];
+            ans[r] = temp;
+        }
+        return ans;
     }
 }
 

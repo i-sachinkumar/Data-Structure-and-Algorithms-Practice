@@ -1,0 +1,5 @@
+package DependancyInjection
+
+class SmartPhone {
+
+}
